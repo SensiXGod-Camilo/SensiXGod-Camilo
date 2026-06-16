@@ -3,59 +3,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SensiXGod Página V1</title>
-
+    <title>SENSIXGOD - LEGADO</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Creepster&display=swap');
+
         body {
-            background: #0f0f0f;
-            color: white;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            background: radial-gradient(circle at center, #0a0022, #000000);
+            color: #fff;
+            font-family: 'Press Start 2P', cursive;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
         }
 
-        .box {
-            text-align: center;
-            background: #1a1a1a;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(255,255,255,0.1);
-            max-width: 600px;
+        .background {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://source.unsplash.com/random/1920x1080/?cyberpunk,neon') no-repeat center center/cover;
+            opacity: 0.15;
+            z-index: -2;
+            animation: pulse 15s infinite alternate;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, rgba(255,0,100,0.1), rgba(0,255,200,0.1));
+            z-index: -1;
+            animation: scanline 8s linear infinite;
         }
 
         h1 {
-            color: #00ff88;
+            font-family: 'Creepster', cursive;
+            font-size: 4.5rem;
+            margin: 0 0 50px 0;
+            text-shadow: 
+                0 0 20px #ff00ff,
+                0 0 40px #00ffff,
+                0 0 60px #ff00ff;
+            animation: glow 2s ease-in-out infinite alternate;
+            letter-spacing: 8px;
         }
 
-        .mantenimiento {
-            color: #ff4d4d;
-            font-size: 22px;
-            font-weight: bold;
+        .button {
+            padding: 25px 60px;
+            font-size: 1.8rem;
+            font-family: 'Press Start 2P', cursive;
+            cursor: pointer;
+            border: 4px solid #ff0000;
+            background: #000;
+            color: #ff0000;
+            text-transform: uppercase;
+            box-shadow: 0 0 30px #ff0000,
+                        inset 0 0 20px #ff0000;
+            transition: all 0.4s;
+            z-index: 10;
+            position: relative;
+            overflow: hidden;
         }
 
-        .info {
-            margin-top: 20px;
-            color: #cccccc;
+        .button:hover {
+            transform: scale(1.15) rotate(3deg);
+            box-shadow: 0 0 60px #00ff00,
+                        inset 0 0 40px #00ff00;
+            border-color: #00ff00;
+            color: #00ff00;
+        }
+
+        #infoBtn {
+            animation: pulseButton 1.5s infinite;
+        }
+
+        #infoText {
+            display: none;
+            margin-top: 40px;
+            padding: 40px;
+            max-width: 800px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 3px solid #00ffff;
+            box-shadow: 0 0 50px #00ffff;
+            font-size: 1.3rem;
+            line-height: 1.8;
+            text-shadow: 0 0 10px #00ffff;
+            z-index: 20;
+        }
+
+        .visible {
+            display: block !important;
+            animation: fadeInScale 0.8s ease-out;
+        }
+
+        #closeBtn {
+            margin-top: 30px;
+            padding: 15px 40px;
+            background: #ff0000;
+            color: white;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 0 30px #ff0000;
+        }
+
+        #closeBtn:hover {
+            background: #00ff00;
+            color: black;
+            box-shadow: 0 0 40px #00ff00;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0; left: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff; }
+            to { text-shadow: 0 0 40px #ff00ff, 0 0 80px #00ffff, 0 0 100px #ff00ff; }
+        }
+
+        @keyframes pulse {
+            from { opacity: 0.15; }
+            to { opacity: 0.35; }
+        }
+
+        @keyframes pulseButton {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        @keyframes scanline {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 200%; }
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.6); }
+            to { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
 <body>
+    <div class="background"></div>
+    <div class="overlay"></div>
+    <canvas id="particles"></canvas>
 
-    <div class="box">
-        <h1>Bienvenido a SensiXGod Página V1!</h1>
-
-        <p class="mantenimiento">
-            Por el momento está en mantenimiento ❌
-        </p>
-
-        <p class="info">
-            En cuanto la terminemos, los desarrolladores automáticamente
-            se te notificarán por WhatsApp.
-        </p>
+    <h1>SENSI X GOD</h1>
+    <h2 style="margin-top:-30px; font-size:1.4rem; color:#00ffff; text-shadow:0 0 20px #00ffff;">LEGADO INFERNAL</h2>
+    
+    <button id="infoBtn" class="button">¿POR QUÉ LA PAGINA FUE CREADA?</button>
+    
+    <div id="infoText">
+        <p>La pagina web fue creada, ya que muchas personas robaban nuestros paneles y lo subian a sus WhatsApp.</p>
+        <p style="color:#00ff00; font-size:1.5rem; margin:20px 0;">Pero no se preocupen...</p>
+        <p>El verdadero poder nunca podrá ser copiado.</p>
+        <button id="closeBtn">CERRAR ×</button>
     </div>
 
+    <script>
+        // Partículas épicas
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 4 + 1;
+                this.speedX = Math.random() * 1.5 - 0.75;
+                this.speedY = Math.random() * 1.5 - 0.75;
+                this.color = Math.random() > 0.5 ? '#00ffff' : '#ff00ff';
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.size > 0.2) this.size -= 0.01;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = this.color;
+                ctx.fillRect(this.x, this.y, this.size, this.size);
+            }
+        }
+
+        function animate() {
+            ctx.fillStyle = 'rgba(0,0,0,0.08)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            if (particles.length < 120) {
+                particles.push(new Particle());
+            }
+            
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].size <= 0.3) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Botón interactivo
+        const infoBtn = document.getElementById('infoBtn');
+        const infoText = document.getElementById('infoText');
+        const closeBtn = document.getElementById('closeBtn');
+
+        infoBtn.addEventListener('click', () => {
+            infoBtn.style.background = '#00ff00';
+            infoBtn.style.color = '#000';
+            infoBtn.style.borderColor = '#00ff00';
+            infoBtn.textContent = '¡PODER DESATADO!';
+            infoText.classList.add('visible');
+            
+            // Explosión de partículas
+            for (let i = 0; i < 80; i++) {
+                let p = new Particle();
+                p.x = canvas.width/2;
+                p.y = canvas.height/3;
+                p.speedX = Math.random()*8 - 4;
+                p.speedY = Math.random()*8 - 6;
+                particles.push(p);
+            }
+        });
+
+        closeBtn.addEventListener('click', () => {
+            infoText.classList.remove('visible');
+            infoBtn.style.background = '#000';
+            infoBtn.style.color = '#ff0000';
+            infoBtn.style.borderColor = '#ff0000';
+            infoBtn.textContent = '¿POR QUÉ LA PAGINA FUE CREADA?';
+        });
+
+        // Responsive
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
 </body>
-</html>
+    </html>
