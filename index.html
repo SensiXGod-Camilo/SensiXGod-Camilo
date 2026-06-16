@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SENSIXGOD | OFICIAL</title>
-    <!-- ✅ PWA / Instalable -->
+    <!-- ✅ LISTO PARA INSTALAR COMO APP / PWA -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#004e92">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -41,14 +41,14 @@
         body.light-mode .button,
         body.light-mode #infoText { background: rgba(230,240,255,0.85); border-color:#0066bb; color:#003366; box-shadow:0 0 20px #0088cc60; }
 
-        /* 🎉 BIENVENIDA AL ENTRAR */
+        /* 🎉 MENSAJE DE BIENVENIDA */
         .bienvenida { display:flex; align-items:center; justify-content:center; position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:99999; }
         .bienvenida-box { background:#000428; border:4px solid #00eeff; border-radius:12px; padding:30px 25px; max-width:420px; width:92%; box-shadow:0 0 30px #00eeff60; font-family:inherit; color:#fff; }
         .bienvenida-box h2 { font-size:1.2rem; margin-bottom:15px; color:#00ffcc; }
         .bienvenida-box p { font-size:0.9rem; line-height:1.6; margin-bottom:20px; }
         .oculto { display:none !important; }
 
-        /* ✅ WHATSAPP FIJO */
+        /* ✅ WHATSAPP */
         .whatsapp-fijo { position:fixed; top:15px; left:50%; transform:translateX(-50%); z-index:999; background:#25d366; color:#fff; padding:10px 22px; border-radius:50px; text-decoration:none; font-size:0.9rem; display:flex; align-items:center; gap:8px; box-shadow:0 0 18px #25d36680; border:2px solid #fff; transition:transform .3s; }
         .whatsapp-fijo:hover { transform:translateX(-50%) scale(1.08); }
         .whatsapp-fijo img { width:22px; height:22px; }
@@ -57,7 +57,7 @@
         .tema-btn { position:fixed; top:15px; right:18px; z-index:999; width:42px; height:42px; border-radius:50%; border:none; background:#ffcc00; color:#000; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 0 15px #ffcc0070; border:2px solid #fff; }
         body.light-mode .tema-btn { background:#222233; color:#ffcc00; box-shadow:0 0 15px #00000050; }
 
-        /* CAPAS FONDO */
+        /* CAPAS DE FONDO */
         .stars, .nebula, .scanlines { position:fixed; top:0; left:0; width:100%; height:100%; z-index:-3; }
         .stars { background-image: radial-gradient(2px 2px at 20% 30%, #fff, transparent), radial-gradient(1px 1px at 60% 70%, #fff, transparent), radial-gradient(1.5px 1.5px at 50% 50%, #00eeff, transparent), radial-gradient(1px 1px at 80% 10%, #00ccff, transparent); background-size:200% 200%; animation:moveStars 60s linear infinite; }
         .nebula { background:radial-gradient(circle at 30% 50%, rgba(0,150,255,.2), transparent 50%), radial-gradient(circle at 70% 20%, rgba(0,255,200,.15), transparent 60%); animation:pulseNebula 20s ease-in-out infinite alternate; }
@@ -71,7 +71,7 @@
         .button { padding:16px 30px; font-size:0.95rem; font-family:'Press Start 2P', cursive; border:3px solid #00eeff; background:rgba(0,20,60,.85); color:#fff; text-transform:uppercase; letter-spacing:1px; box-shadow:0 0 20px rgba(0,238,255,.6); transition:.3s; margin:10px; cursor:pointer; border-radius:8px; }
         .button:hover { transform:scale(1.05); background:rgba(0,40,100,.9); box-shadow:0 0 30px rgba(0,238,255,.8); }
 
-        /* 🛒 MENÚ SECCIONES */
+        /* 🛒 MENÚ DE SECCIONES */
         .contenedor-botones-secc { margin:30px auto; max-width:700px; display:flex; flex-wrap:wrap; justify-content:center; gap:15px; }
         .btn-seccion { background:rgba(0,30,70,.9); border-color:#00ccff; font-size:1rem; padding:15px 30px; }
         .btn-seccion.activo { background:#0088cc; color:#fff; box-shadow:0 0 25px #00ccff80; }
@@ -90,11 +90,11 @@
         .btn-apk:hover { background:#0099ee; }
         .aviso-vacio { color:#ff4444; font-size:1rem; font-weight:bold; margin-top:15px; text-align:center; }
 
-        /* 📺 VIDEO */
-        .video-caja { margin:25px auto; max-width:420px; border-radius:12px; overflow:hidden; border:3px solid #ffcc00; box-shadow:0 0 20px #ffcc0050; }
+        /* 📺 CAJA DE VÍDEOS */
+        .video-caja { margin:20px auto; max-width:420px; border-radius:12px; overflow:hidden; border:3px solid #ffcc00; box-shadow:0 0 20px #ffcc0050; }
         .video-caja iframe { width:100%; height:240px; border:none; }
 
-        /* 🪟 VENTANA CONFIRMACIÓN + CONTADOR 5s */
+        /* 🪟 VENTANA CONFIRMACIÓN + CONTADOR */
         .modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.85); z-index:9999; align-items:center; justify-content:center; }
         .modal-box { background:#000428; border:3px solid #00eeff; padding:25px; border-radius:12px; max-width:400px; width:90%; font-family:inherit; color:#fff; }
         .contador { font-size:1.4rem; color:#ffcc00; margin:15px 0; font-weight:bold; }
@@ -113,7 +113,7 @@
 </head>
 <body>
 
-<!-- 🎉 MENSAJE BIENVENIDA -->
+<!-- 🎉 MENSAJE AL ENTRAR -->
 <div class="bienvenida" id="cajaBienvenida">
     <div class="bienvenida-box">
         <h2>Bienvenido A la página de SensiXGod 🤩</h2>
@@ -150,13 +150,13 @@
     <button class="button btn-seccion" data-seccion="virtual">📱 VIRTUAL</button>
 </div>
 
-<!-- 📂 MOD MENÚS → TODOS + GENERADOR DE CLAVES -->
+<!-- 📂 MOD MENÚS -->
 <div id="modmenu" class="contenido-seccion visible">
     <div class="caja-seccion">
         <h3 style="margin-bottom:15px; color:#00ffcc;">📂 MOD MENÚS DISPONIBLES</h3>
         <div class="mods-grid">
 
-            <!-- 🟢 Cuban Mods 9.2 -->
+            <!-- 🇨🇺 Cuban Mods -->
             <div class="mod-card">
                 <div class="mod-name">🇨🇺 Cuban Mods — v9.2</div>
                 <div class="doble-boton">
@@ -165,7 +165,7 @@
                 </div>
             </div>
 
-            <!-- 🟢 The King Cheats V258 -->
+            <!-- 👑 The King Cheats V258 -->
             <div class="mod-card">
                 <div class="mod-name">👑 The King Cheats — V258</div>
                 <div class="mod-desc">
@@ -178,7 +178,7 @@
                 </div>
             </div>
 
-            <!-- 🟢 Ankit Hunter V250 -->
+            <!-- 🔥 Ankit Hunter -->
             <div class="mod-card">
                 <div class="mod-name">🔥 Ankit Hunter — V250</div>
                 <div class="doble-boton">
@@ -186,7 +186,7 @@
                 </div>
             </div>
 
-            <!-- 🟢 Injector No Root -->
+            <!-- 🧪 Injector Sin Root -->
             <div class="mod-card">
                 <div class="mod-name">🧪 Injector — Sin Root</div>
                 <div class="doble-boton">
@@ -194,7 +194,7 @@
                 </div>
             </div>
 
-            <!-- 🔑 GENERADOR DE CLAVES SENSIXGOD V2 ✅ AGREGADO -->
+            <!-- 🔑 Generador de Claves -->
             <div class="mod-card">
                 <div class="mod-name">🔑 Generador de Claves — SensiXGod V2</div>
                 <div class="doble-boton">
@@ -204,14 +204,20 @@
 
         </div>
 
-        <h4 style="margin:25px 0 10px; color:#ffcc00;">🔐 TUTORIAL PARA CLAVES</h4>
+        <!-- 📚 TUTORIALES SEPARADOS -->
+        <h4 style="margin:25px 0 10px; color:#ffcc00;">🔐 Tutorial — Ankit Hunter</h4>
         <div class="video-caja">
             <iframe src="https://youtube.com/embed/Hc9JUBjRG4Q" allowfullscreen allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
+        </div>
+
+        <h4 style="margin:25px 0 10px; color:#ffcc00;">🔑 Tutorial Claves — The King Cheats (Última Versión)</h4>
+        <div class="video-caja">
+            <iframe src="https://youtube.com/embed/lLMCwcj7s6g" allowfullscreen allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
         </div>
     </div>
 </div>
 
-<!-- 🔑 ROOT -->
+<!-- 🔑 ZONA ROOT -->
 <div id="root" class="contenido-seccion">
     <div class="caja-seccion">
         <h3 style="margin-bottom:15px; color:#ff7777;">🔑 ZONA ROOT</h3>
@@ -219,7 +225,7 @@
     </div>
 </div>
 
-<!-- 📱 VIRTUAL -->
+<!-- 📱 ZONA VIRTUAL -->
 <div id="virtual" class="contenido-seccion">
     <div class="caja-seccion">
         <h3 style="margin-bottom:15px; color:#77ffaa;">📱 ZONA VIRTUAL</h3>
@@ -227,7 +233,7 @@
     </div>
 </div>
 
-<!-- 🪟 VENTANA CONFIRMACIÓN + CONTADOR -->
+<!-- 🪟 VENTANA DE ACCIÓN -->
 <div id="ventanaAccion" class="modal">
     <div class="modal-box">
         <h3 id="textoPregunta">¿Estás seguro de continuar?</h3>
@@ -245,7 +251,7 @@
         document.getElementById("cajaBienvenida").classList.add("oculto");
     });
 
-    // ✅ CAMBIO TEMA
+    // ✅ CAMBIAR TEMA
     const btnTema = document.getElementById("cambiarTema");
     btnTema.addEventListener("click", () => {
         document.body.classList.toggle("light-mode");
@@ -264,7 +270,7 @@
         });
     });
 
-    // 📥 TODAS LAS ACCIONES: CONFIRMACIÓN + 5 SEGUNDOS
+    // 📥 DESCARGAS / ENLACES + CONTADOR 5 SEGUNDOS
     const todosBotonesAccion = document.querySelectorAll(".btn-key, .btn-apk");
     const ventanaAccion = document.getElementById("ventanaAccion");
     const textoPregunta = document.getElementById("textoPregunta");
@@ -316,12 +322,11 @@
     init(); anim();
     window.addEventListener("resize",()=>{w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;});
 
-    // 📌 REGISTRO DEL SERVICIO PARA PWA / INSTALACIÓN
+    // 📌 REGISTRO PARA PWA / INSTALACIÓN
     if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
             navigator.serviceWorker.register("sw.js")
-                .then(reg => console.log("✅ SW activo:", reg))
-                .catch(err => console.log("❌ Error SW:", err));
+                .catch(err => console.log("SW:", err));
         });
     }
 
