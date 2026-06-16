@@ -1,184 +1,315 @@
-<script>
-// =====================
-// FONDOS
-// =====================
-const bg = document.getElementById('bg');
-const themeBtn = document.getElementById('themeBtn');
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SENSIXGOD | OFICIAL</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Creepster&family=Orbitron:wght@400;600;900&display=swap');
 
-let currentTheme = 0;
-
-function changeTheme() {
-    currentTheme = (currentTheme + 1) % 3;
-
-    if (currentTheme === 0) {
-        bg.style.backgroundImage =
-            "url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564')";
-        bg.style.backgroundColor = "transparent";
-        bg.style.opacity = "0.25";
-        document.body.style.color = "#00ffcc";
-
-    } else if (currentTheme === 1) {
-        bg.style.backgroundImage = "none";
-        bg.style.backgroundColor = "#000";
-        bg.style.opacity = "1";
-        document.body.style.color = "#00ffcc";
-
-    } else {
-        bg.style.backgroundImage = "none";
-        bg.style.backgroundColor = "#fff";
-        bg.style.opacity = "1";
-        document.body.style.color = "#000";
-    }
-}
-
-themeBtn.addEventListener("click", changeTheme);
-
-// Fondo inicial
-currentTheme = -1;
-changeTheme();
-
-
-// =====================
-// PERSONAS ONLINE
-// =====================
-let online = Math.floor(Math.random() * 500) + 100;
-
-document.getElementById("count").textContent = online;
-
-setInterval(() => {
-    const cambio = Math.floor(Math.random() * 15) - 7;
-
-    online += cambio;
-
-    if (online < 100) online = 100;
-    if (online > 999) online = 999;
-
-    document.getElementById("count").textContent = online;
-}, 5000);
-
-
-// =====================
-// PARTICULAS
-// =====================
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
-
-let w = canvas.width = window.innerWidth;
-let h = canvas.height = window.innerHeight;
-
-const particles = [];
-
-class Particle {
-    constructor() {
-        this.reset();
-    }
-
-    reset() {
-        this.x = Math.random() * w;
-        this.y = Math.random() * h;
-        this.size = Math.random() * 3 + 1;
-        this.speedX = Math.random() * 0.4 - 0.2;
-        this.speedY = Math.random() * 0.4 - 0.2;
-    }
-
-    update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-
-        if (this.x < 0 || this.x > w || this.y < 0 || this.y > h) {
-            this.reset();
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-    }
 
-    draw() {
-        ctx.fillStyle = "#00ffff";
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = "#00ffff";
-        ctx.fillRect(this.x, this.y, this.size, this.size);
-    }
-}
-
-for (let i = 0; i < 150; i++) {
-    particles.push(new Particle());
-}
-
-function animate() {
-    ctx.clearRect(0, 0, w, h);
-
-    particles.forEach((particle) => {
-        particle.update();
-        particle.draw();
-    });
-
-    requestAnimationFrame(animate);
-}
-
-animate();
-
-window.addEventListener("resize", () => {
-    w = canvas.width = window.innerWidth;
-    h = canvas.height = window.innerHeight;
-});
-
-
-// =====================
-// BOTONES
-// =====================
-const verInfoBtn = document.getElementById("verInfoBtn");
-const infoText = document.getElementById("infoText");
-
-verInfoBtn.addEventListener("click", () => {
-    verInfoBtn.style.display = "none";
-    infoText.classList.add("visible");
-});
-
-
-// =====================
-// CUENTA REGRESIVA
-// =====================
-const razonBtn = document.getElementById("razonBtn");
-const razonText = document.getElementById("razonText");
-
-let timeLeft = 20;
-let timer;
-
-razonBtn.addEventListener("click", () => {
-    infoText.style.display = "none";
-    razonText.classList.add("visible");
-
-    document.getElementById("countdown").textContent = timeLeft;
-
-    timer = setInterval(() => {
-        timeLeft--;
-
-        document.getElementById("seconds").textContent = timeLeft;
-        document.getElementById("countdown").textContent = timeLeft;
-
-        if (timeLeft <= 0) {
-            clearInterval(timer);
-
-            document.body.innerHTML = `
-                <h1 style="
-                    margin-top:40vh;
-                    color:#ff0000;
-                    font-size:3rem;
-                    text-align:center;
-                ">
-                    ¡GRACIAS POR VISITAR!
-                </h1>
-            `;
+        body {
+            min-height: 200vh;
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            overflow-x: hidden;
+            position: relative;
+            transition: all 0.5s ease;
         }
-    }, 1000);
-});
 
+        /* Fondos */
+        #bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -3;
+            background: radial-gradient(circle at center, #001122, #000033);
+            background-size: cover;
+            background-position: center;
+            opacity: 0.25;
+            transition: all 0.5s ease;
+        }
 
-// =====================
-// PWA
-// =====================
-if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-        navigator.serviceWorker.register("sw.js")
-            .catch(err => console.log(err));
-    });
-}
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -2;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                transparent 1px,
+                rgba(0, 255, 200, 0.06) 2px,
+                rgba(0, 255, 200, 0.06) 3px
+            );
+            background-size: 100% 4px;
+            animation: scrollScan 8s linear infinite;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Títulos */
+        h1 {
+            font-family: 'Creepster', cursive;
+            font-size: clamp(4rem, 12vw, 8rem);
+            margin: 80px 0 20px;
+            background: linear-gradient(90deg, #00eeff, #0088ff, #00eeff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 25px #00eeff) drop-shadow(0 0 60px #0088ff);
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        .online-counter {
+            font-size: 1.2rem;
+            margin: 15px 0 50px;
+            color: #a0f0ff;
+            text-shadow: 0 0 15px #00eeff;
+        }
+
+        /* Botones */
+        .button {
+            padding: 18px 45px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border: 2px solid #00eeff;
+            background: rgba(0, 20, 60, 0.75);
+            color: #00eeff;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 25px rgba(0, 238, 255, 0.5);
+            transition: all 0.4s ease;
+            margin: 15px;
+            border-radius: 8px;
+        }
+
+        .button:hover {
+            transform: scale(1.08);
+            border-color: #ffffff;
+            color: #ffffff;
+            box-shadow: 0 0 45px rgba(0, 238, 255, 0.8);
+        }
+
+        #themeBtn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            font-size: 0.9rem;
+            z-index: 10;
+        }
+
+        /* Secciones de información */
+        .info-box {
+            display: none;
+            margin: 40px auto;
+            padding: 35px;
+            max-width: 850px;
+            background: rgba(0, 15, 50, 0.92);
+            border: 2px solid #00eeff;
+            box-shadow: 0 0 40px #00eeff;
+            border-radius: 12px;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .visible {
+            display: block !important;
+            animation: fadeScale 0.5s ease-out;
+        }
+
+        /* Animaciones */
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px #00eeff) drop-shadow(0 0 50px #0088ff); }
+            to { filter: drop-shadow(0 0 35px #00eeff) drop-shadow(0 0 80px #0088ff); }
+        }
+
+        @keyframes scrollScan {
+            from { transform: translateY(0); }
+            to { transform: translateY(4px); }
+        }
+
+        @keyframes fadeScale {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div id="bg"></div>
+    <div class="scanlines"></div>
+    <canvas id="particles"></canvas>
+
+    <button id="themeBtn" class="button">Cambiar Tema</button>
+
+    <h1>SENSIXGOD</h1>
+    <div class="online-counter">
+        👤 Usuarios en línea: <span id="count">150</span>
+    </div>
+
+    <button id="verInfoBtn" class="button">¿POR QUÉ SE CREÓ LA PÁGINA?</button>
+
+    <div id="infoText" class="info-box">
+        <p>Esta página fue creada para detener el robo de contenido. Muchas personas copiaban nuestros paneles y herramientas, los modificaban y los compartían en grupos de WhatsApp como si fueran suyos, poniendo en riesgo a otros usuarios.</p>
+        <p>Aquí tienes solo la información oficial, sin archivos falsos ni virus.</p>
+        <br>
+        <button id="razonBtn" class="button">Ver mensaje final</button>
+    </div>
+
+    <div id="razonText" class="info-box">
+        <h2 style="color:#ff5555; margin-bottom:20px;">⏱️ Cierre en:</h2>
+        <div style="font-size:3rem; font-weight:bold; color:#00ff99; margin:20px 0;">
+            <span id="countdown">20</span> segundos
+        </div>
+        <p>Gracias por confiar en el sitio oficial de SENSIXGOD. Recuerda que no hay descargas disponibles, todo el material ha sido desactivado por seguridad.</p>
+    </div>
+
+    <script>
+        // =====================
+        // FONDOS / TEMAS
+        // =====================
+        const bg = document.getElementById('bg');
+        const themeBtn = document.getElementById('themeBtn');
+        let currentTheme = 0;
+
+        function changeTheme() {
+            currentTheme = (currentTheme + 1) % 3;
+
+            if (currentTheme === 0) {
+                // Tema Espacio Azul
+                bg.style.background = "radial-gradient(circle at center, #001122, #000033)";
+                bg.style.opacity = "0.25";
+                document.body.style.color = "#00ffcc";
+            } else if (currentTheme === 1) {
+                // Tema Oscuro
+                bg.style.background = "#000000";
+                bg.style.opacity = "1";
+                document.body.style.color = "#00ffcc";
+            } else {
+                // Tema Claro
+                bg.style.background = "#ffffff";
+                bg.style.opacity = "1";
+                document.body.style.color = "#000000";
+            }
+        }
+
+        themeBtn.addEventListener("click", changeTheme);
+        currentTheme = -1;
+        changeTheme();
+
+        // =====================
+        // CONTADOR USUARIOS ONLINE
+        // =====================
+        let online = Math.floor(Math.random() * 500) + 100;
+        document.getElementById("count").textContent = online;
+
+        setInterval(() => {
+            const cambio = Math.floor(Math.random() * 15) - 7;
+            online += cambio;
+            if (online < 100) online = 100;
+            if (online > 999) online = 999;
+            document.getElementById("count").textContent = online;
+        }, 5000);
+
+        // =====================
+        // PARTÍCULAS ANIMADAS
+        // =====================
+        const canvas = document.getElementById("particles");
+        const ctx = canvas.getContext("2d");
+        let w = canvas.width = window.innerWidth;
+        let h = canvas.height = window.innerHeight;
+        const particles = [];
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * w;
+                this.y = Math.random() * h;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 0.4 - 0.2;
+                this.speedY = Math.random() * 0.4 - 0.2;
+                this.color = "#00ffff";
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > w || this.y < 0 || this.y > h) this.reset();
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = this.color;
+                ctx.fillRect(this.x, this.y, this.size, this.size);
+            }
+        }
+
+        for (let i = 0; i < 150; i++) particles.push(new Particle());
+
+        function animate() {
+            ctx.clearRect(0, 0, w, h);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        window.addEventListener("resize", () => {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+        });
+
+        // =====================
+        // BOTONES E INTERACCIÓN
+        // =====================
+        const verInfoBtn = document.getElementById("verInfoBtn");
+        const infoText = document.getElementById("infoText");
+        const razonBtn = document.getElementById("razonBtn");
+        const razonText = document.getElementById("razonText");
+
+        verInfoBtn.addEventListener("click", () => {
+            verInfoBtn.style.display = "none";
+            infoText.classList.add("visible");
+        });
+
+        // =====================
+        // CUENTA REGRESIVA
+        // =====================
+        let timeLeft = 20;
+        let timer;
+
+        razonBtn.addEventListener("click", () => {
+            infoText.classList.remove("visible");
+            razonText.classList.add("visible");
+            document.getElementById("countdown").textContent = timeLeft;
+
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById("countdown").textContent = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    document.body.innerHTML = `
+                        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; padding:20px;">
+                            <h1 style="color:#ff0000; font-size:3.5rem; text-shadow:0 0 30px #ff0000;">¡GRACIAS POR VISITAR!</h1>
+                            <p style="font-size:1.3rem; margin-top:20px;">Vuelve pronto para más información oficial.</p>
+                        </div>
+                    `;
+                }
+            }, 1000);
+        });
     </script>
+</body>
+</html>
