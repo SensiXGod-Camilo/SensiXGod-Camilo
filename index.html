@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SENSIXGOD | OFICIAL</title>
-    <!-- ✅ LISTO PARA AGREGAR AL ESCRITORIO / PWA -->
+    <!-- ✅ PWA / Instalable -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#004e92">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -31,10 +31,7 @@
             position: relative;
         }
         /* ✅ MODO CLARO */
-        body.light-mode {
-            background: #ffffff;
-            color: #002244;
-        }
+        body.light-mode { background: #ffffff; color: #002244; }
         body.light-mode .stars,
         body.light-mode .nebula,
         body.light-mode .scanlines { opacity: 0.08; }
@@ -71,7 +68,7 @@
         .subtitulo { font-size:1.1rem; color:#a0f0ff; margin-bottom:40px; letter-spacing:4px; }
         body.light-mode .subtitulo { color:#224466; }
 
-        .button { padding:18px 40px; font-size:1.1rem; font-family:'Press Start 2P', cursive; border:3px solid #00eeff; background:rgba(0,20,60,.85); color:#fff; text-transform:uppercase; letter-spacing:1px; box-shadow:0 0 20px rgba(0,238,255,.6); transition:.3s; margin:12px; cursor:pointer; border-radius:8px; }
+        .button { padding:16px 30px; font-size:0.95rem; font-family:'Press Start 2P', cursive; border:3px solid #00eeff; background:rgba(0,20,60,.85); color:#fff; text-transform:uppercase; letter-spacing:1px; box-shadow:0 0 20px rgba(0,238,255,.6); transition:.3s; margin:10px; cursor:pointer; border-radius:8px; }
         .button:hover { transform:scale(1.05); background:rgba(0,40,100,.9); box-shadow:0 0 30px rgba(0,238,255,.8); }
 
         /* 🛒 MENÚ SECCIONES */
@@ -83,20 +80,21 @@
         .contenido-seccion.visible { display:block; animation:fadeScale .4s ease-out; }
         .caja-seccion { background:rgba(0,15,50,.9); border:3px solid #00eeff; border-radius:12px; padding:25px; box-shadow:0 0 25px #00eeff40; }
         .mods-grid { display:flex; flex-direction:column; gap:22px; align-items:center; margin:20px 0; }
-        .mod-card { background:linear-gradient(145deg, rgba(0,30,80,.9), rgba(0,10,40,.9)); border:3px solid #00eeff; padding:22px; border-radius:10px; width:min(95%,460px); }
-        .mod-name { font-size:1.1rem; margin-bottom:15px; color:#00ffcc; }
-        .doble-boton { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:10px; }
+        .mod-card { background:linear-gradient(145deg, rgba(0,30,80,.9), rgba(0,10,40,.9)); border:3px solid #00eeff; padding:22px; border-radius:10px; width:min(95%,460px); text-align:left; }
+        .mod-name { font-size:1.1rem; margin-bottom:12px; color:#00ffcc; text-align:center; }
+        .mod-desc { font-size:0.8rem; line-height:1.5; color:#b8e8ff; margin-bottom:12px; }
+        .doble-boton { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:8px; }
         .btn-key { background:#229955; border-color:#44ff99; }
         .btn-key:hover { background:#33bb77; }
         .btn-apk { background:#0077bb; border-color:#00ccff; }
         .btn-apk:hover { background:#0099ee; }
-        .aviso-vacio { color:#ff4444; font-size:1rem; font-weight:bold; margin-top:15px; }
+        .aviso-vacio { color:#ff4444; font-size:1rem; font-weight:bold; margin-top:15px; text-align:center; }
 
         /* 📺 VIDEO */
         .video-caja { margin:25px auto; max-width:420px; border-radius:12px; overflow:hidden; border:3px solid #ffcc00; box-shadow:0 0 20px #ffcc0050; }
         .video-caja iframe { width:100%; height:240px; border:none; }
 
-        /* 🪟 VENTANA CONFIRMACIÓN + CONTADOR */
+        /* 🪟 VENTANA CONFIRMACIÓN + CONTADOR 5s */
         .modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.85); z-index:9999; align-items:center; justify-content:center; }
         .modal-box { background:#000428; border:3px solid #00eeff; padding:25px; border-radius:12px; max-width:400px; width:90%; font-family:inherit; color:#fff; }
         .contador { font-size:1.4rem; color:#ffcc00; margin:15px 0; font-weight:bold; }
@@ -152,37 +150,61 @@
     <button class="button btn-seccion" data-seccion="virtual">📱 VIRTUAL</button>
 </div>
 
-<!-- 📂 MOD MENÚS → AHORA CON CUBAN MODS -->
+<!-- 📂 MOD MENÚS → TODOS + GENERADOR DE CLAVES -->
 <div id="modmenu" class="contenido-seccion visible">
     <div class="caja-seccion">
         <h3 style="margin-bottom:15px; color:#00ffcc;">📂 MOD MENÚS DISPONIBLES</h3>
         <div class="mods-grid">
 
-            <!-- 🟢 CUBAN MODS 9.2 ✨ NUEVO -->
+            <!-- 🟢 Cuban Mods 9.2 -->
             <div class="mod-card">
-                <div class="mod-name">🇨🇺 Cuban Mods — Última Versión 9.2</div>
+                <div class="mod-name">🇨🇺 Cuban Mods — v9.2</div>
                 <div class="doble-boton">
-                    <button class="button btn-key" data-link="https://cubanmods.com/keygratis.php">🔑 GENERAR KEY</button>
+                    <button class="button btn-key" data-link="https://cubanmods.com/keygratis.php">🔑 GENERAR CLAVE</button>
                     <button class="button btn-apk" data-link="https://www.mediafire.com/file/ok6rsfq0r8y5ffc/Cuban-Mods-9.2.apks/file">📥 DESCARGAR APK</button>
                 </div>
             </div>
 
-            <!-- OTROS YA EXISTENTES -->
+            <!-- 🟢 The King Cheats V258 -->
             <div class="mod-card">
-                <div class="mod-name">🔥 Ankit Hunter V250</div>
+                <div class="mod-name">👑 The King Cheats — V258</div>
+                <div class="mod-desc">
+                    ⚠️ Activa funciones AL INICIO y desactívalas AL FINAL para evitar errores.<br>
+                    ✅ Sin lista negra ni baneos aleatorios.<br>
+                    ✅ Funciona en todos los dispositivos Android.
+                </div>
+                <div class="doble-boton">
+                    <button class="button btn-apk" data-link="https://www.mediafire.com/file/pt08dk9drp1qy0v/TheKingCheats_V258.apks/file">📥 DESCARGAR APK MOD</button>
+                </div>
+            </div>
+
+            <!-- 🟢 Ankit Hunter V250 -->
+            <div class="mod-card">
+                <div class="mod-name">🔥 Ankit Hunter — V250</div>
                 <div class="doble-boton">
                     <button class="button btn-apk" data-link="https://www.mediafire.com/file/9g0gorpde7pa7hm/FREE+FIRE+ANKIT+HUNTER+250+.apks/file">📥 DESCARGAR</button>
                 </div>
             </div>
+
+            <!-- 🟢 Injector No Root -->
             <div class="mod-card">
-                <div class="mod-name">🧪 Injector No Root V250</div>
+                <div class="mod-name">🧪 Injector — Sin Root</div>
                 <div class="doble-boton">
                     <button class="button btn-apk" data-link="https://www.mediafire.com/file/0r639026hpd2vxq/ANKIT+HUNTER+V250+INJECT+NON+ROOT.apk/file">📥 DESCARGAR</button>
                 </div>
             </div>
+
+            <!-- 🔑 GENERADOR DE CLAVES SENSIXGOD V2 ✅ AGREGADO -->
+            <div class="mod-card">
+                <div class="mod-name">🔑 Generador de Claves — SensiXGod V2</div>
+                <div class="doble-boton">
+                    <button class="button btn-apk" data-link="https://www.mediafire.com/file/js09hcx2x6971b9/SensiXGod_Key_(V2).apk/file">📥 DESCARGAR GENERADOR</button>
+                </div>
+            </div>
+
         </div>
 
-        <h4 style="margin:25px 0 10px; color:#ffcc00;">🔐 TUTORIAL CLAVES — ANKIT HUNTER</h4>
+        <h4 style="margin:25px 0 10px; color:#ffcc00;">🔐 TUTORIAL PARA CLAVES</h4>
         <div class="video-caja">
             <iframe src="https://youtube.com/embed/Hc9JUBjRG4Q" allowfullscreen allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
         </div>
@@ -193,7 +215,7 @@
 <div id="root" class="contenido-seccion">
     <div class="caja-seccion">
         <h3 style="margin-bottom:15px; color:#ff7777;">🔑 ZONA ROOT</h3>
-        <p class="aviso-vacio">❌ Los Paquetes Para Los usuarios root no han llegado</p>
+        <p class="aviso-vacio">❌ Los paquetes para usuarios root aún no han llegado</p>
     </div>
 </div>
 
@@ -201,11 +223,11 @@
 <div id="virtual" class="contenido-seccion">
     <div class="caja-seccion">
         <h3 style="margin-bottom:15px; color:#77ffaa;">📱 ZONA VIRTUAL</h3>
-        <p class="aviso-vacio">❌ Los Paquetes para Usuarios Virtual No han llegado</p>
+        <p class="aviso-vacio">❌ Los paquetes para usuarios virtuales aún no han llegado</p>
     </div>
 </div>
 
-<!-- 🪟 VENTANA CONFIRMACIÓN + CONTADOR 5s -->
+<!-- 🪟 VENTANA CONFIRMACIÓN + CONTADOR -->
 <div id="ventanaAccion" class="modal">
     <div class="modal-box">
         <h3 id="textoPregunta">¿Estás seguro de continuar?</h3>
@@ -242,7 +264,7 @@
         });
     });
 
-    // 📥 ACCIONES: GENERAR KEY / DESCARGAR → MISMA VENTANA + CONTADOR
+    // 📥 TODAS LAS ACCIONES: CONFIRMACIÓN + 5 SEGUNDOS
     const todosBotonesAccion = document.querySelectorAll(".btn-key, .btn-apk");
     const ventanaAccion = document.getElementById("ventanaAccion");
     const textoPregunta = document.getElementById("textoPregunta");
@@ -256,7 +278,7 @@
         btn.addEventListener("click", () => {
             destinoFinal = btn.getAttribute("data-link");
             textoPregunta.textContent = btn.classList.contains("btn-key")
-                ? "¿Seguro que quieres ir a Generar Clave?"
+                ? "¿Seguro que quieres ir a generar clave?"
                 : "¿Seguro que quieres descargar este archivo?";
             ventanaAccion.classList.add("visible");
             let seg = 5;
@@ -294,6 +316,15 @@
     init(); anim();
     window.addEventListener("resize",()=>{w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;});
 
+    // 📌 REGISTRO DEL SERVICIO PARA PWA / INSTALACIÓN
+    if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+            navigator.serviceWorker.register("sw.js")
+                .then(reg => console.log("✅ SW activo:", reg))
+                .catch(err => console.log("❌ Error SW:", err));
+        });
+    }
+
     // 🎚️ INFO
     const infoBtn = document.getElementById("infoBtn");
     const infoText = document.getElementById("infoText");
@@ -302,4 +333,5 @@
     closeBtn.addEventListener("click", () => { infoText.classList.remove("visible"); infoBtn.textContent="¿POR QUÉ SE CREÓ ESTA PÁGINA?"; });
 </script>
 </body>
-</html>
+    </html>
+    
