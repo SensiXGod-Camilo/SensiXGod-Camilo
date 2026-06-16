@@ -5,311 +5,361 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SENSIXGOD | OFICIAL</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Creepster&family=Orbitron:wght@400;600;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Creepster&display=swap');
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: background-color 0.4s, color 0.4s, border-color 0.4s, box-shadow 0.4s;
         }
 
         body {
             min-height: 200vh;
-            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(135deg, #000428 0%, #004e92 50%, #000428 100%);
+            color: #00eeff;
+            font-family: 'Press Start 2P', cursive;
             text-align: center;
             overflow-x: hidden;
             position: relative;
-            transition: all 0.5s ease;
+        }
+        /* ✅ MODO CLARO */
+        body.light-mode {
+            background: #ffffff;
+            color: #002244;
+        }
+        body.light-mode .stars,
+        body.light-mode .nebula,
+        body.light-mode .scanlines {
+            opacity: 0.08;
+        }
+        body.light-mode .mod-card,
+        body.light-mode .caja-seccion,
+        body.light-mode .bienvenida-box {
+            background: rgba(240,245,255,0.9);
+            border-color:#0066bb;
+        }
+        body.light-mode .button,
+        body.light-mode #infoText {
+            background: rgba(230,240,255,0.85);
+            border-color:#0066bb;
+            color:#003366;
+            box-shadow:0 0 20px #0088cc60;
         }
 
-        /* Fondos */
-        #bg {
+        /* ✅ VENTANA DE BIENVENIDA AL ENTRAR */
+        .bienvenida {
+            display:flex; align-items:center; justify-content:center;
+            position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:99999;
+        }
+        .bienvenida-box {
+            background:#000428; border:4px solid #00eeff; border-radius:12px;
+            padding:30px 25px; max-width:420px; width:92%; box-shadow:0 0 30px #00eeff60;
+            font-family:inherit; color:#fff;
+        }
+        .bienvenida-box h2 { font-size:1.2rem; margin-bottom:15px; color:#00ffcc; }
+        .bienvenida-box p { font-size:0.9rem; line-height:1.6; margin-bottom:20px; }
+        .oculto { display:none !important; }
+
+        /* ✅ BOTÓN WHATSAPP FIJO ARRIBA */
+        .whatsapp-fijo {
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 999;
+            background: #25d366;
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 0 18px #25d36680;
+            border: 2px solid #fff;
+            transition: transform 0.3s;
+        }
+        .whatsapp-fijo:hover { transform: translateX(-50%) scale(1.08); }
+        .whatsapp-fijo img { width: 22px; height: 22px; }
+
+        /* ✅ BOTÓN SOL / LUNA — CAMBIO DE TEMA */
+        .tema-btn {
+            position: fixed;
+            top: 15px;
+            right: 18px;
+            z-index: 999;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: none;
+            background: #ffcc00;
+            color:#000;
+            font-size:22px;
+            cursor:pointer;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            box-shadow:0 0 15px #ffcc0070;
+            border:2px solid #fff;
+        }
+        body.light-mode .tema-btn { background:#222233; color:#ffcc00; box-shadow:0 0 15px #00000050; }
+
+        /* Capas de fondo y efectos */
+        .stars, .nebula, .scanlines {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: -3;
-            background: radial-gradient(circle at center, #001122, #000033);
-            background-size: cover;
-            background-position: center;
-            opacity: 0.25;
-            transition: all 0.5s ease;
         }
-
+        .stars {
+            background-image: radial-gradient(2px 2px at 20% 30%, #ffffff, transparent),
+            radial-gradient(1px 1px at 60% 70%, #ffffff, transparent),
+            radial-gradient(1.5px 1.5px at 50% 50%, #00eeff, transparent),
+            radial-gradient(1px 1px at 80% 10%, #00ccff, transparent);
+            background-size: 200% 200%;
+            animation: moveStars 60s linear infinite;
+        }
+        .nebula {
+            background: radial-gradient(circle at 30% 50%, rgba(0,150,255,0.2), transparent 50%),
+                        radial-gradient(circle at 70% 20%, rgba(0,255,200,0.15), transparent 60%);
+            animation: pulseNebula 20s ease-in-out infinite alternate;
+        }
         .scanlines {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -2;
-            background: repeating-linear-gradient(
-                to bottom,
-                transparent 0px,
-                transparent 1px,
-                rgba(0, 255, 200, 0.06) 2px,
-                rgba(0, 255, 200, 0.06) 3px
-            );
+            background: repeating-linear-gradient(to bottom, transparent 0px, transparent 1px, rgba(0,238,255,0.05) 2px, rgba(0,238,255,0.05) 3px);
             background-size: 100% 4px;
-            animation: scrollScan 8s linear infinite;
+            animation: scrollScan 10s linear infinite; opacity:0.7;
         }
+        canvas { position: fixed; top:0;left:0; width:100%;height:100%; z-index:-1; pointer-events:none; }
 
-        canvas {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        /* Títulos */
         h1 {
             font-family: 'Creepster', cursive;
             font-size: clamp(4rem, 12vw, 8rem);
-            margin: 80px 0 20px;
+            margin: 90px 0 40px;
             background: linear-gradient(90deg, #00eeff, #0088ff, #00eeff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 25px #00eeff) drop-shadow(0 0 60px #0088ff);
-            animation: glow 3s ease-in-out infinite alternate;
+            filter: drop-shadow(0 0 20px #00eeff) drop-shadow(0 0 50px #0088ff);
+            animation: glowTitle 3s ease-in-out infinite alternate;
+            letter-spacing: 6px;
         }
+        .subtitulo { font-size:1.1rem; color:#a0f0ff; margin-bottom:40px; letter-spacing:4px; }
+        body.light-mode .subtitulo { color:#224466; }
 
-        .online-counter {
-            font-size: 1.2rem;
-            margin: 15px 0 50px;
-            color: #a0f0ff;
-            text-shadow: 0 0 15px #00eeff;
-        }
-
-        /* Botones */
         .button {
-            padding: 18px 45px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            border: 2px solid #00eeff;
-            background: rgba(0, 20, 60, 0.75);
-            color: #00eeff;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            box-shadow: 0 0 25px rgba(0, 238, 255, 0.5);
-            transition: all 0.4s ease;
-            margin: 15px;
-            border-radius: 8px;
+            padding:18px 40px; font-size:1.1rem; font-family:'Press Start 2P', cursive;
+            border:3px solid #00eeff; background:rgba(0,20,60,0.85); color:#fff;
+            text-transform:uppercase; letter-spacing:1px; box-shadow:0 0 20px rgba(0,238,255,0.6);
+            transition:all 0.3s; margin:12px; cursor:pointer; border-radius:8px;
         }
+        .button:hover { transform:scale(1.05); background:rgba(0,40,100,0.9); box-shadow:0 0 30px rgba(0,238,255,0.8); }
 
-        .button:hover {
-            transform: scale(1.08);
-            border-color: #ffffff;
-            color: #ffffff;
-            box-shadow: 0 0 45px rgba(0, 238, 255, 0.8);
-        }
+        /* 🛒 BOTONES DE SECCIONES */
+        .contenedor-botones-secc { margin:30px auto; max-width:700px; display:flex; flex-wrap:wrap; justify-content:center; gap:15px; }
+        .btn-seccion { background:rgba(0,30,70,0.9); border-color:#00ccff; font-size:1rem; padding:15px 30px; }
+        .btn-seccion.activo { background:#0088cc; color:#fff; box-shadow:0 0 25px #00ccff80; }
 
-        #themeBtn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 12px 20px;
-            font-size: 0.9rem;
-            z-index: 10;
-        }
+        /* 📦 CONTENIDO */
+        .contenido-seccion { display:none; max-width:850px; margin:0 auto 60px; padding:20px; }
+        .contenido-seccion.visible { display:block; animation:fadeScale 0.4s ease-out; }
+        .caja-seccion { background:rgba(0,15,50,0.9); border:3px solid #00eeff; border-radius:12px; padding:25px; box-shadow:0 0 25px #00eeff40; }
+        .mods-grid { display:flex; flex-direction:column; gap:20px; align-items:center; margin:20px 0; }
+        .mod-card { background:linear-gradient(145deg, rgba(0,30,80,0.9), rgba(0,10,40,0.9)); border:3px solid #00eeff; padding:20px; border-radius:10px; width:min(95%, 450px); }
+        .mod-name { font-size:1.1rem; margin-bottom:15px; }
+        .download-btn { width:100%; padding:14px; font-size:0.9rem; font-family:inherit; background:#0077bb; color:#fff; border:2px solid #00eeff; border-radius:6px; cursor:pointer; transition:0.3s; border:none; }
+        .download-btn:hover { background:#0099ee; }
+        .aviso-vacio { color:#ff4444; font-size:1rem; font-weight:bold; margin-top:15px; }
 
-        /* Secciones de información */
-        .info-box {
-            display: none;
-            margin: 40px auto;
-            padding: 35px;
-            max-width: 850px;
-            background: rgba(0, 15, 50, 0.92);
-            border: 2px solid #00eeff;
-            box-shadow: 0 0 40px #00eeff;
-            border-radius: 12px;
-            line-height: 1.8;
-            font-size: 1.1rem;
-        }
+        /* 📺 VIDEO */
+        .video-caja { margin:25px auto; max-width:420px; border-radius:12px; overflow:hidden; border:3px solid #ffcc00; box-shadow:0 0 20px #ffcc0050; }
+        .video-caja iframe { width:100%; height:240px; border:none; }
 
-        .visible {
-            display: block !important;
-            animation: fadeScale 0.5s ease-out;
-        }
+        /* 🪟 VENTANA DESCARGA */
+        .modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center; }
+        .modal-box { background:#000428; border:3px solid #00eeff; padding:25px; border-radius:12px; max-width:400px; width:90%; font-family:inherit; color:#fff; }
+        .contador { font-size:1.4rem; color:#ffcc00; margin:15px 0; font-weight:bold; }
+        .modal-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:10px; }
+        .modal-btn { padding:10px 22px; border-radius:6px; border:none; font-family:inherit; cursor:pointer; font-size:0.9rem; }
+        .btn-si { background:#25d366; color:#fff; }
+        .btn-no { background:#dd3333; color:#fff; }
 
-        /* Animaciones */
-        @keyframes glow {
-            from { filter: drop-shadow(0 0 20px #00eeff) drop-shadow(0 0 50px #0088ff); }
-            to { filter: drop-shadow(0 0 35px #00eeff) drop-shadow(0 0 80px #0088ff); }
-        }
-
-        @keyframes scrollScan {
-            from { transform: translateY(0); }
-            to { transform: translateY(4px); }
-        }
-
-        @keyframes fadeScale {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
+        @keyframes moveStars { to { background-position:200% 200%; } }
+        @keyframes pulseNebula { 0%{opacity:0.2;}100%{opacity:0.4;} }
+        @keyframes scrollScan { to { transform:translateY(4px); } }
+        @keyframes glowTitle { 0%{filter:drop-shadow(0 0 20px #00eeff) drop-shadow(0 0 50px #0088ff);}100%{filter:drop-shadow(0 0 35px #00eeff) drop-shadow(0 0 80px #0088ff);} }
+        @keyframes fadeScale { from {opacity:0;transform:scale(0.92);} to {opacity:1;transform:scale(1);} }
+        .visible { display:block !important; }
     </style>
 </head>
 <body>
-    <div id="bg"></div>
-    <div class="scanlines"></div>
-    <canvas id="particles"></canvas>
 
-    <button id="themeBtn" class="button">Cambiar Tema</button>
+<!-- 🎉 MENSAJE AL ENTRAR -->
+<div class="bienvenida" id="cajaBienvenida">
+    <div class="bienvenida-box">
+        <h2>Bienvenido A la página de SensiXGod 🤩</h2>
+        <p>seras bienvenido siempre.</p>
+        <button class="button" id="btnConfirmar">✅ CONFIRMAR</button>
+    </div>
+</div>
+
+    <a href="https://whatsapp.com/channel/0029Vb6vN7xEquiQMAAQuK0M" target="_blank" class="whatsapp-fijo">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp">
+        GRUPO OFC DE PANELES
+    </a>
+
+    <button class="tema-btn" id="cambiarTema">☀️</button>
+
+    <div class="stars"></div><div class="nebula"></div><div class="scanlines"></div><canvas id="particles"></canvas>
 
     <h1>SENSIXGOD</h1>
-    <div class="online-counter">
-        👤 Usuarios en línea: <span id="count">150</span>
-    </div>
+    <p class="subtitulo">• MERCADO Y DESCARGAS OFICIALES •</p>
 
-    <button id="verInfoBtn" class="button">¿POR QUÉ SE CREÓ LA PÁGINA?</button>
-
-    <div id="infoText" class="info-box">
-        <p>Esta página fue creada para detener el robo de contenido. Muchas personas copiaban nuestros paneles y herramientas, los modificaban y los compartían en grupos de WhatsApp como si fueran suyos, poniendo en riesgo a otros usuarios.</p>
-        <p>Aquí tienes solo la información oficial, sin archivos falsos ni virus.</p>
-        <br>
-        <button id="razonBtn" class="button">Ver mensaje final</button>
-    </div>
-
-    <div id="razonText" class="info-box">
-        <h2 style="color:#ff5555; margin-bottom:20px;">⏱️ Cierre en:</h2>
-        <div style="font-size:3rem; font-weight:bold; color:#00ff99; margin:20px 0;">
-            <span id="countdown">20</span> segundos
+    <button id="infoBtn" class="button">¿POR QUÉ SE CREÓ ESTA PÁGINA?</button>
+    <div id="infoText" class="contenido-seccion">
+        <div class="caja-seccion">
+            <p>Esta página fue creada para detener el robo de contenido. Muchas personas copiaban y redistribuían nuestros paneles sin permiso.</p>
+            <p>Desde aquí verás solo lo oficial y seguro.</p>
+            <p style="color:#00ff99; font-size:1rem; margin:20px 0; font-weight:bold;">No te preocupes: aquí siempre la información es real.</p>
+            <button id="closeBtn" class="button" style="padding:10px 30px; font-size:0.9rem;">CERRAR</button>
         </div>
-        <p>Gracias por confiar en el sitio oficial de SENSIXGOD. Recuerda que no hay descargas disponibles, todo el material ha sido desactivado por seguridad.</p>
+    </div>
+
+    <!-- 🛒 3 BOTONES -->
+    <div class="contenedor-botones-secc">
+        <button class="button btn-seccion activo" data-seccion="modmenu">📂 MOD MENÚS</button>
+        <button class="button btn-seccion" data-seccion="root">🔑 ROOT</button>
+        <button class="button btn-seccion" data-seccion="virtual">📱 VIRTUAL</button>
+    </div>
+
+    <!-- 📂 MOD MENÚS -->
+    <div id="modmenu" class="contenido-seccion visible">
+        <div class="caja-seccion">
+            <h3 style="margin-bottom:15px; color:#00ffcc;">📂 MOD MENÚS DISPONIBLES</h3>
+            <div class="mods-grid">
+                <div class="mod-card">
+                    <div class="mod-name">🔥 Ankit Hunter V250</div>
+                    <button class="download-btn" data-link="https://www.mediafire.com/file/9g0gorpde7pa7hm/FREE+FIRE+ANKIT+HUNTER+250+.apks/file">📥 DESCARGAR</button>
+                </div>
+                <div class="mod-card">
+                    <div class="mod-name">🧪 Injector No Root V250</div>
+                    <button class="download-btn" data-link="https://www.mediafire.com/file/0r639026hpd2vxq/ANKIT+HUNTER+V250+INJECT+NON+ROOT.apk/file">📥 DESCARGAR</button>
+                </div>
+            </div>
+            <h4 style="margin:25px 0 10px; color:#ffcc00;">🔐 TUTORIAL CLAVES — ANKIT HUNTER</h4>
+            <div class="video-caja">
+                <iframe src="https://youtube.com/embed/Hc9JUBjRG4Q" allowfullscreen allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔑 ROOT -->
+    <div id="root" class="contenido-seccion">
+        <div class="caja-seccion">
+            <h3 style="margin-bottom:15px; color:#ff7777;">🔑 ZONA ROOT</h3>
+            <p class="aviso-vacio">❌ Los Paquetes Para Los usuarios root no han llegado</p>
+        </div>
+    </div>
+
+    <!-- 📱 VIRTUAL -->
+    <div id="virtual" class="contenido-seccion">
+        <div class="caja-seccion">
+            <h3 style="margin-bottom:15px; color:#77ffaa;">📱 ZONA VIRTUAL</h3>
+            <p class="aviso-vacio">❌ Los Paquetes para Usuarios Virtual No han llegado</p>
+        </div>
+    </div>
+
+    <!-- 🪟 VENTANA DESCARGA -->
+    <div id="ventanaDescarga" class="modal">
+        <div class="modal-box">
+            <h3>¿Estás seguro que quieres descargar este archivo?</h3>
+            <div id="contadorTexto" class="contador">5 segundos...</div>
+            <div class="modal-btns">
+                <button class="modal-btn btn-si" id="aceptarDesc">SÍ, DESCARGAR</button>
+                <button class="modal-btn btn-no" id="cancelarDesc">CANCELAR</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        // =====================
-        // FONDOS / TEMAS
-        // =====================
-        const bg = document.getElementById('bg');
-        const themeBtn = document.getElementById('themeBtn');
-        let currentTheme = 0;
+        // 🎉 QUITAR MENSAJE DE BIENVENIDA
+        document.getElementById("btnConfirmar").addEventListener("click", () => {
+            document.getElementById("cajaBienvenida").classList.add("oculto");
+        });
 
-        function changeTheme() {
-            currentTheme = (currentTheme + 1) % 3;
+        // ✅ CAMBIO TEMA
+        const btnTema = document.getElementById("cambiarTema");
+        btnTema.addEventListener("click", () => {
+            document.body.classList.toggle("light-mode");
+            btnTema.textContent = document.body.classList.contains("light-mode") ? "🌙" : "☀️";
+        });
 
-            if (currentTheme === 0) {
-                // Tema Espacio Azul
-                bg.style.background = "radial-gradient(circle at center, #001122, #000033)";
-                bg.style.opacity = "0.25";
-                document.body.style.color = "#00ffcc";
-            } else if (currentTheme === 1) {
-                // Tema Oscuro
-                bg.style.background = "#000000";
-                bg.style.opacity = "1";
-                document.body.style.color = "#00ffcc";
-            } else {
-                // Tema Claro
-                bg.style.background = "#ffffff";
-                bg.style.opacity = "1";
-                document.body.style.color = "#000000";
-            }
-        }
+        // 🛒 CAMBIAR SECCIONES
+        const botonesSecc = document.querySelectorAll(".btn-seccion");
+        const contenidosSecc = document.querySelectorAll(".contenido-seccion");
+        botonesSecc.forEach(btn => {
+            btn.addEventListener("click", () => {
+                botonesSecc.forEach(b => b.classList.remove("activo"));
+                contenidosSecc.forEach(c => c.classList.remove("visible"));
+                btn.classList.add("activo");
+                document.getElementById(btn.dataset.seccion).classList.add("visible");
+            });
+        });
 
-        themeBtn.addEventListener("click", changeTheme);
-        currentTheme = -1;
-        changeTheme();
+        // 📥 DESCARGAS + CONTADOR
+        const botonesDesc = document.querySelectorAll(".download-btn");
+        const ventana = document.getElementById("ventanaDescarga");
+        const textoContador = document.getElementById("contadorTexto");
+        const btnAceptar = document.getElementById("aceptarDesc");
+        const btnCancelar = document.getElementById("cancelarDesc");
+        let enlaceDestino = "";
+        let cuentaRegresiva;
 
-        // =====================
-        // CONTADOR USUARIOS ONLINE
-        // =====================
-        let online = Math.floor(Math.random() * 500) + 100;
-        document.getElementById("count").textContent = online;
+        botonesDesc.forEach(btn => {
+            btn.addEventListener("click", () => {
+                enlaceDestino = btn.getAttribute("data-link");
+                ventana.classList.add("visible");
+                let seg = 5;
+                textoContador.textContent = `${seg} segundos...`;
+                btnAceptar.disabled = true;
+                clearInterval(cuentaRegresiva);
+                cuentaRegresiva = setInterval(() => {
+                    seg--;
+                    textoContador.textContent = `${seg} segundos...`;
+                    if (seg <= 0) {
+                        clearInterval(cuentaRegresiva);
+                        btnAceptar.disabled = false;
+                        textoContador.textContent = "✅ ¡LISTO! Pulsa Aceptar";
+                    }
+                }, 1000);
+            });
+        });
+        btnAceptar.addEventListener("click", () => { clearInterval(cuentaRegresiva); window.open(enlaceDestino,"_blank"); ventana.classList.remove("visible"); });
+        btnCancelar.addEventListener("click", () => { clearInterval(cuentaRegresiva); ventana.classList.remove("visible"); });
 
-        setInterval(() => {
-            const cambio = Math.floor(Math.random() * 15) - 7;
-            online += cambio;
-            if (online < 100) online = 100;
-            if (online > 999) online = 999;
-            document.getElementById("count").textContent = online;
-        }, 5000);
-
-        // =====================
-        // PARTÍCULAS ANIMADAS
-        // =====================
+        // ✨ PARTÍCULAS
         const canvas = document.getElementById("particles");
         const ctx = canvas.getContext("2d");
         let w = canvas.width = window.innerWidth;
         let h = canvas.height = window.innerHeight;
-        const particles = [];
-
+        let particles = [];
         class Particle {
-            constructor() {
-                this.reset();
-            }
-            reset() {
-                this.x = Math.random() * w;
-                this.y = Math.random() * h;
-                this.size = Math.random() * 3 + 1;
-                this.speedX = Math.random() * 0.4 - 0.2;
-                this.speedY = Math.random() * 0.4 - 0.2;
-                this.color = "#00ffff";
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x < 0 || this.x > w || this.y < 0 || this.y > h) this.reset();
-            }
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.shadowBlur = 15;
-                ctx.shadowColor = this.color;
-                ctx.fillRect(this.x, this.y, this.size, this.size);
-            }
+            constructor(){this.reset();}
+            reset(){this.x=Math.random()*w;this.y=Math.random()*h;this.size=Math.random()*3+0.8;this.speedX=Math.random()*0.8-0.4;this.speedY=Math.random()*0.8-0.4;this.color="#00eeff";this.opacity=Math.random()*0.7+0.3;}
+            update(){this.x+=this.speedX;this.y+=this.speedY;if(this.x<0||this.x>w||this.y<0||this.y>h)this.reset();}
+            draw(){ctx.globalAlpha=this.opacity;ctx.fillStyle=this.color;ctx.shadowBlur=8;ctx.shadowColor=this.color;ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;}
         }
+        function init(){particles=[];for(let i=0;i<120;i++)particles.push(new Particle());}
+        function anim(){ctx.clearRect(0,0,w,h);particles.forEach(p=>{p.update();p.draw();});requestAnimationFrame(anim);}
+        init();anim();
+        window.addEventListener("resize",()=>{w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;});
 
-        for (let i = 0; i < 150; i++) particles.push(new Particle());
-
-        function animate() {
-            ctx.clearRect(0, 0, w, h);
-            particles.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(animate);
-        }
-        animate();
-
-        window.addEventListener("resize", () => {
-            w = canvas.width = window.innerWidth;
-            h = canvas.height = window.innerHeight;
-        });
-
-        // =====================
-        // BOTONES E INTERACCIÓN
-        // =====================
-        const verInfoBtn = document.getElementById("verInfoBtn");
+        // 🎚️ INFO
+        const infoBtn = document.getElementById("infoBtn");
         const infoText = document.getElementById("infoText");
-        const razonBtn = document.getElementById("razonBtn");
-        const razonText = document.getElementById("razonText");
-
-        verInfoBtn.addEventListener("click", () => {
-            verInfoBtn.style.display = "none";
-            infoText.classList.add("visible");
-        });
-
-        // =====================
-        // CUENTA REGRESIVA
-        // =====================
-        let timeLeft = 20;
-        let timer;
-
-        razonBtn.addEventListener("click", () => {
-            infoText.classList.remove("visible");
-            razonText.classList.add("visible");
-            document.getElementById("countdown").textContent = timeLeft;
-
-            timer = setInterval(() => {
-                timeLeft--;
-                document.getElementById("countdown").textContent = timeLeft;
-
-                if (timeLeft <= 0) {
-                    clearInterval(timer);
-                    document.body.innerHTML = `
-                        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; padding:20px;">
-                            <h1 style="color:#ff0000; font-size:3.5rem; text-shadow:0 0 30px #ff0000;">¡GRACIAS POR VISITAR!</h1>
-                            <p style="font-size:1.3rem; margin-top:20px;">Vuelve pronto para más información oficial.</p>
-                        </div>
-                    `;
-                }
-            }, 1000);
-        });
+        const closeBtn = document.getElementById("closeBtn");
+        infoBtn.addEventListener("click", () => { infoBtn.textContent="✅ INFO ABIERTA"; infoText.classList.add("visible"); infoText.scrollIntoView({behavior:"smooth"}); });
+        closeBtn.addEventListener("click", () => { infoText.classList.remove("visible"); infoBtn.textContent="¿POR QUÉ SE CREÓ ESTA PÁGINA?"; });
     </script>
 </body>
 </html>
