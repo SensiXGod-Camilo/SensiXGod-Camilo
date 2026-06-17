@@ -5,187 +5,176 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SENSIXGOD | EFECTOS TOTALES</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0000ff">
+    <meta name="theme-color" content="#222">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
+    <!-- ✅ FUENTE DE BLOQUES, SIN NOMBRAR EL JUEGO -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+
     <style>
-        /* ✅ FUENTE ESTILO MINECRAFT */
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-
         * { 
-            margin:0; padding:0; box-sizing:border-box; 
-            transition:all 0.25s ease;
-            font-family: 'Press Start 2P', 'VT323', monospace;
-            letter-spacing: 0.5px;
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: 'VT323', 'Press Start 2P', monospace;
         }
-
         body {
-            background:#050505;
-            color:#fff;
-            min-height:250vh;
-            overflow-x:hidden;
-            position:relative;
+            background: #111;
+            color: #fff;
+            padding-bottom: 30px;
+            /* ✅ SOLO SOMBRA SUAVE DE FONDO — SIN ANIMACIONES PESADAS */
+            background-image: radial-gradient(rgba(60,60,80,0.15) 1px, transparent 1px);
+            background-size: 16px 16px;
         }
-
-        /* 🎨 LIGHT MODE */
-        body.light-mode {
-            background:#f0f0f0;
-            color:#111;
-        }
-        body.light-mode .fondo-animado,
-        body.light-mode .stars,
-        body.light-mode .nebula,
-        body.light-mode .scanlines,
-        body.light-mode .ondas { opacity: 0.25; }
-        body.light-mode .mod-card,
-        body.light-mode header,
-        body.light-mode .welcome-box {
-            background:rgba(255,255,255,0.9);
-            color:#111;
-            border-color:#000;
-        }
-        body.light-mode .logo {
-            background:linear-gradient(90deg,#0066ff,#ff00aa,#ffaa00);
-            -webkit-background-clip:text;
-            -webkit-text-fill-color:transparent;
-        }
-
-        /* 🎨 FONDO SUPER EFECTO */
-        .fondo-animado {
-            position:fixed; inset:-50%;
-            background:linear-gradient(45deg,#ff00cc,#3333ff,#00ccff,#ff00cc);
-            background-size:400% 400%;
-            animation:gradMov 8s linear infinite;
-            filter:blur(60px) brightness(0.6);
-            z-index:-4;
-        }
-        .stars, .nebula, .scanlines, .ondas {
-            position:fixed; inset:0; z-index:-3; pointer-events:none;
-        }
-        .stars {
-            background-image:
-                radial-gradient(2px 2px at 15% 25%,#fff,transparent),
-                radial-gradient(1px 1px at 45% 60%,#fff,transparent),
-                radial-gradient(2.5px 2.5px at 75% 40%,#0ff,transparent),
-                radial-gradient(1.5px 1.5px at 90% 85%,#f0f,transparent),
-                radial-gradient(3px 3px at 30% 90%,#ff0,transparent);
-            background-size:250% 250%;
-            animation:moverEstrellas 3s linear infinite;
-        }
-        .nebula {
-            background:radial-gradient(circle at 20% 30%,rgba(255,0,200,0.25),transparent 55%),
-                        radial-gradient(circle at 80% 70%,rgba(255,255,255,0.25),transparent 55%),
-                        radial-gradient(circle at 50% 50%,rgba(255,255,0,0.15),transparent 65%);
-            animation:pulsarNebula 1.2s ease-in-out infinite alternate;
-        }
-        .scanlines {
-            background:repeating-linear-gradient(to bottom,transparent 0 2px,rgba(0,255,255,0.08) 3px 4px,rgba(255,0,255,0.05) 5px 6px);
-            background-size:100% 8px;
-            animation:desplazarLineas 0.5s linear infinite;
-        }
-        .ondas {
-            background:radial-gradient(circle,rgba(0,255,200,0.18) 0,transparent 70%);
-            animation:expandirOndas 2s ease-out infinite;
-        }
-        canvas#particles { 
-            position:fixed; inset:0; z-index:-2; pointer-events:none; 
-            filter:hue-rotate(0deg); animation:girarMatiz 4s linear infinite; 
-        }
-
-        /* 💡 EFECTOS GENERALES */
-        @keyframes gradMov {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
-        @keyframes moverEstrellas {to{background-position:250% 250%;}}
-        @keyframes pulsarNebula {from{transform:scale(1);opacity:0.35;}to{transform:scale(1.25);opacity:0.7;}}
-        @keyframes desplazarLineas {to{background-position:0 8px;}}
-        @keyframes expandirOndas {0%{transform:scale(0.5);opacity:0.9;}100%{transform:scale(3);opacity:0;}}
-        @keyframes girarMatiz {to{filter:hue-rotate(360deg);}}
-        @keyframes brilloTexto {0%,100%{filter:brightness(1) drop-shadow(0 0 8px #0ff);}50%{filter:brightness(1.8) drop-shadow(0 0 20px #f0f);}}
-        @keyframes rebote {0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-6px) scale(1.04);}}
-        @keyframes bordeNeon {0%{box-shadow:0 0 4px #0ff,0 0 8px #0ff,0 0 12px #f0f,inset 0 0 4px #0ff;}50%{box-shadow:0 0 8px #f0f,0 0 16px #f0f,0 0 24px #ff0,inset 0 0 8px #f0f;}100%{box-shadow:0 0 4px #0ff,0 0 8px #0ff,0 0 12px #f0f,inset 0 0 4px #0ff;}}
-        @keyframes rotarSuave {from{transform:rotate(-0.4deg);}to{transform:rotate(0.4deg);}}
-
-        /* 🧱 ESTRUCTURA CON EFECTOS */
         header {
-            background:rgba(10,10,20,0.75); backdrop-filter:blur(12px) saturate(160%);
-            border-bottom:2px solid; border-image:linear-gradient(90deg,#0ff,#f0f,#ff0,#0ff) 1;
-            padding:22px 15px; text-align:center; position:sticky; top:0; z-index:100;
-            animation:bordeNeon 1.2s infinite;
+            background: #222;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #444;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.4);
         }
-        .logo {
-            font-size:clamp(2rem,7vw,3.2rem); letter-spacing:3px;
-            background:linear-gradient(90deg,#0ff,#f0f,#ff0,#0ff); background-size:300%;
-            -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-            animation:gradMov 2s linear infinite, brilloTexto 1.5s infinite alternate;
-        }
-        .subtitle { font-size:0.95rem; animation:brilloTexto 2s infinite; margin-top:6px; }
+        .logo { font-size: 24px; font-weight: normal; letter-spacing:1px; }
+        .subtitle { font-size: 15px; color:#ccc; margin-top:4px; }
+
         .anuncio-nuevo {
-            background:linear-gradient(90deg,#ff00cc,#00ffff,#ffff00,#ff00cc); background-size:300%;
-            animation:gradMov 1.5s infinite, rebote 1s infinite alternate;
-            padding:16px; max-width:780px; margin:20px auto; border-radius:14px; text-align:center; font-weight:bold; font-size:0.9rem;
-            border:3px solid #fff; box-shadow:0 0 25px #fff8;
+            background:#2b2b2b;
+            padding:12px;
+            text-align:center;
+            font-weight:bold;
+            margin:15px auto;
+            max-width:750px;
+            border-radius:4px;
+            border:1px solid #3a3a3a;
         }
-        .tema-btn, .whatsapp-fijo, .whatsapp-btn { animation:rebote 0.9s infinite alternate, bordeNeon 1.4s infinite; font-size:0.85rem; }
-        .welcome-popup { background:rgba(0,0,0,0.92); backdrop-filter:blur(20px); }
-        .welcome-box {
-            background:rgba(15,15,30,0.85); backdrop-filter:blur(10px);
-            border:3px solid transparent; border-image:linear-gradient(45deg,#0ff,#f0f,#ff0) 1;
-            animation:rotarSuave 0.8s infinite alternate, bordeNeon 1.3s infinite; padding:20px;
+        button {
+            padding:8px 14px;
+            border-radius:3px;
+            border:none;
+            cursor:pointer;
+            font-size:14px;
+            letter-spacing:0.5px;
+            transition: transform 0.12s ease, box-shadow 0.12s ease;
         }
-        .tabs { gap:15px; border-bottom:2px solid; border-image:linear-gradient(90deg,#0ff,#f0f,#ff0)1; display:flex; justify-content:center; flex-wrap:wrap; }
-        .tab { padding:12px 18px; border-radius:10px 10px 0 0; position:relative; overflow:hidden; font-size:0.8rem; cursor:pointer; }
-        .tab.active { background:rgba(255,255,255,0.12); animation:brilloTexto 0.6s infinite, bordeNeon 1s infinite; transform:scale(1.05); }
+        button:active { transform: scale(0.96); }
+
+        .tabs {
+            display:flex;
+            justify-content:center;
+            gap:10px;
+            border-bottom:1px solid #444;
+            padding:8px;
+            flex-wrap:wrap;
+        }
+        .tab {
+            background:#2b2b2b;
+            padding:8px 12px;
+            border-radius:3px 3px 0 0;
+            font-size:14px;
+            cursor:pointer;
+            border:1px solid #3a3a3a;
+            border-bottom:none;
+        }
+        .tab.active { background:#383838; }
+        .section { display:none; padding:15px; }
+        .section.active { display:block; }
+
         .mod-card {
-            background:rgba(12,12,25,0.8); backdrop-filter:blur(8px) saturate(140%);
-            border:2px solid transparent; border-image:linear-gradient(45deg,#0ff,#f0f,#ff0,#0ff)1; border-radius:14px;
-            padding:22px; margin:18px auto; max-width:480px;
-            animation:rotarSuave 1.1s infinite alternate, bordeNeon 1.6s infinite;
-            transition:all 0.2s; font-size:0.8rem;
+            background:#222;
+            padding:15px;
+            margin:12px auto;
+            max-width:460px;
+            border-radius:4px;
+            border:1px solid #333;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.35);
+            transition: box-shadow 0.15s ease;
         }
-        .mod-card:hover, .mod-card:active { transform:scale(1.07) rotate(0deg); box-shadow:0 0 30px #0ff,0 0 50px #f0f; }
-        .mod-name { font-size:1rem; font-weight:bold; text-align:center; animation:brilloTexto 0.8s infinite; margin-bottom:8px; }
-        .novedad { color:#0f0; font-size:0.75rem; text-align:center; margin:6px 0; font-weight:bold; }
-        .prohibido { color:#ff3333; font-size:0.75rem; text-align:center; margin:6px 0; font-weight:bold; text-decoration:line-through; }
-        .btn {
-            padding:10px 16px; border-radius:10px; border:none; font-weight:bold; cursor:pointer; position:relative; overflow:hidden; font-size:0.75rem;
-            animation:rebote 1.3s infinite alternate, bordeNeon 1.4s infinite;
+        .mod-card:hover { box-shadow: 0 2px 6px rgba(0,0,0,0.5); }
+        .mod-name {
+            text-align:center;
+            font-size:16px;
+            margin-bottom:8px;
         }
-        .btn:hover, .btn:active { transform:scale(1.1); letter-spacing:1px; filter:brightness(1.4) saturate(180%); }
-        .btn:disabled, .btn-prohibido { background:#444 !important; color:#888 !important; cursor:not-allowed; opacity:0.6; }
-        .video-incrustado { max-width:100%; border-radius:10px; margin:12px auto; border:2px solid #00eeff; box-shadow:0 0 15px #00eeff40; overflow:hidden; }
-        .video-incrustado iframe { width:100%; height:200px; border:none; }
-        .section{display:none;padding:15px}.section.active{display:block}
+        .novedad { color:#3f3; font-size:13px; text-align:center; margin:4px 0; }
+        .prohibido { color:#f55; font-size:13px; text-align:center; margin:4px 0; text-decoration:line-through; }
+        .botones-linea {
+            display:flex;
+            gap:8px;
+            justify-content:center;
+            margin-top:10px;
+            flex-wrap:wrap;
+        }
+        .btn-verde { background:#28a745; color:#fff; }
+        .btn-azul { background:#007bff; color:#fff; }
+        .btn-naranja { background:#e68a00; color:#fff; }
+        .btn-gris { background:#555; color:#aaa; cursor:not-allowed; }
+
+        .video-incrustado { max-width:100%; margin:10px auto; border-radius:3px; overflow:hidden; border:1px solid #3a3a3a; }
+        iframe { width:100%; height:180px; border:none; }
+        .info-caja { max-width:520px; margin:0 auto; background:#222; padding:12px; border-radius:4px; display:none; font-size:14px; border:1px solid #333; }
+        .enlace-whatsapp {
+            display:block;
+            width:260px;
+            text-align:center;
+            background:#25d366;
+            color:#fff;
+            text-decoration:none;
+            padding:10px;
+            border-radius:4px;
+            margin:20px auto 0;
+            font-size:14px;
+        }
+        .boton-flotante {
+            position:fixed;
+            bottom:12px;
+            right:12px;
+            background:#25d366;
+            color:#fff;
+            border:none;
+            padding:7px 11px;
+            border-radius:3px;
+            font-size:13px;
+        }
+        #cambiarTema {
+            position:fixed;
+            top:12px;
+            right:12px;
+            background:#3a3a3a;
+            color:#fff;
+            border:none;
+            padding:6px 10px;
+            border-radius:3px;
+            font-size:13px;
+        }
+        body.light-mode { 
+            background:#f8f8f8; 
+            color:#111; 
+            background-image: radial-gradient(rgba(0,0,0,0.06) 1px, transparent 1px);
+        }
+        body.light-mode header,
+        body.light-mode .mod-card,
+        body.light-mode .info-caja { background:#fff; border-color:#ddd; }
+        body.light-mode .tab,
+        body.light-mode .anuncio-nuevo { background:#e9e9e9; border-color:#ddd; }
     </style>
 </head>
 <body>
 
-<!-- CAPAS DE EFECTOS -->
-<div class="fondo-animado"></div>
-<div class="stars"></div><div class="nebula"></div><div class="scanlines"></div><div class="ondas"></div>
-<canvas id="particles"></canvas>
-
-<div class="welcome-popup" id="welcomePopup" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:999;">
-    <div class="welcome-box">
-        <h2>¡SENSIXGOD — EFECTOS MÁXIMOS 🚀</h2>
-        <p style="color:#ddd; margin:15px 0; font-size:0.8rem;">TODO GRATIS • MOD • ROOT • VIRTUAL</p>
-        <button onclick="cerrarBienvenida()" style="padding:12px 25px; border-radius:20px; border:none; font-weight:bold; animation:bordeNeon 0.7s infinite; font-size:0.75rem;">✅ ENTRAR</button>
-    </div>
-</div>
-
-<a href="https://whatsapp.com/channel/0029Vb6vN7xEquiQMAAQuK0M" class="whatsapp-fijo" style="position:fixed;bottom:15px;right:15px;z-index:99;">📲 CANAL</a>
-<button class="tema-btn" id="cambiarTema" style="position:fixed;top:15px;right:15px;z-index:99;padding:8px 12px;border-radius:8px;border:none;">⚡</button>
+<button id="cambiarTema">⚡</button>
+<a href="https://whatsapp.com/channel/0029Vb6vN7xEquiQMAAQuK0M" class="boton-flotante">📲 CANAL</a>
 
 <header>
     <div class="logo">SENSIXGOD</div>
-    <div class="subtitle">✨ ESTILO MINECRAFT • SIN LÍMITES ✨</div>
+    <div class="subtitle">DESCARGAS Y CLAVES • TOTALMENTE GRATIS</div>
 </header>
 
-<div class="anuncio-nuevo">🔥 DESCARGAS Y CLAVES • TOTALMENTE GRATIS 🔥</div>
+<div class="anuncio-nuevo">🔥 TODO LISTO PARA USAR 🔥</div>
 
-<button id="infoBtn" style="display:block;margin:0 auto 20px;padding:11px 20px;border-radius:12px;animation:bordeNeon 1.2s infinite; font-size:0.75rem;">❓ ¿POR QUÉ ESTA PÁGINA?</button>
-<div id="infoText" style="max-width:550px;margin:0 auto;display:none;padding:15px;background:rgba(20,20,40,0.7);backdrop-filter:blur(8px);border-radius:12px;animation:bordeNeon 1.5s infinite;">
-    <p style="font-size:0.75rem;">Solo contenido oficial y seguro. Todo gratuito y con los mejores efectos visuales.</p>
-    <button onclick="this.parentElement.style.display='none'" style="margin-top:10px; font-size:0.7rem;">CERRAR</button>
+<button id="infoBtn" style="display:block; margin:0 auto 15px;">❓ ¿POR QUÉ ESTA PÁGINA?</button>
+<div id="infoText" class="info-caja">
+    <p>Contenido seguro, rápido y sin cargas pesadas.</p>
+    <button onclick="this.parentElement.style.display='none'" style="margin-top:8px;">CERRAR</button>
 </div>
 
 <div class="tabs">
@@ -197,101 +186,126 @@
 <div class="section active" id="sec0">
     <div class="mod-card">
         <div class="mod-name">🇨🇺 CUBAN MODS v9.0</div>
-        <div class="botones-linea" style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
-            <button class="btn" style="background:#22aa66;" onclick="window.open('https://cubanmods.com/keygratis.php')">🔑 CLAVE</button>
-            <button class="btn" style="background:#0088dd;" onclick="window.open('https://www.mediafire.com/file/epkw3xo1vtl575c/Cuban-Mods-9.0.apks/file')">📥 DESCARGAR</button>
+        <div class="botones-linea">
+            <button class="btn btn-verde" onclick="window.open('https://cubanmods.com/keygratis.php')">🔑 CLAVE</button>
+            <button class="btn btn-azul" onclick="window.open('https://www.mediafire.com/file/epkw3xo1vtl575c/Cuban-Mods-9.0.apks/file')">📥 DESCARGAR</button>
         </div>
     </div>
 
-    <!-- ✅ THE KING CHEATS V259 + TUTORIAL DENTRO Y FUERA -->
     <div class="mod-card">
         <div class="mod-name">👑 THE KING CHEATS V259 🟢</div>
-        <div class="novedad">✅ SIN LISTA NEGRA • SIN BANEOS • FUNCIONA EN TODOS</div>
+        <div class="novedad">✅ SIN LISTA NEGRA • SIN BANEOS</div>
         <div class="video-incrustado">
             <iframe src="https://www.youtube.com/embed/lLMCwcj7s6g" allowfullscreen loading="lazy"></iframe>
         </div>
-        <div class="botones-linea" style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
-            <button class="btn" style="background:#cc8800;" onclick="window.open('https://youtu.be/lLMCwcj7s6g?si=tM3id178vTYNK5gA','_blank')">📖 VER FUERA</button>
-            <button class="btn" style="background:#0088dd;" onclick="window.open('https://www.mediafire.com/file/szbf1p5s1bzofpd/TheKingCheatsFF_V259.apks/file')">📥 DESCARGAR</button>
+        <div class="botones-linea">
+            <button class="btn btn-naranja" onclick="window.open('https://youtu.be/lLMCwcj7s6g?si=tM3id178vTYNK5gA','_blank')">📖 VER FUERA</button>
+            <button class="btn btn-azul" onclick="window.open('https://www.mediafire.com/file/szbf1p5s1bzofpd/TheKingCheatsFF_V259.apks/file')">📥 DESCARGAR</button>
         </div>
     </div>
 
-    <!-- ⛔ VALI MODS PROHIBIDO -->
     <div class="mod-card">
         <div class="mod-name">⚠️ VALI MODS</div>
-        <div class="prohibido">❌ PROHIBIDO • NO DISPONIBLE</div>
-        <div class="botones-linea" style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
-            <button class="btn btn-prohibido" disabled>🚫 NO DISPONIBLE</button>
+        <div class="prohibido">❌ NO DISPONIBLE</div>
+        <div class="botones-linea">
+            <button class="btn btn-gris" disabled>🚫 NO DISPONIBLE</button>
         </div>
     </div>
 
-    <div class="mod-card"><div class="mod-name">🔥 ANKIT HUNTER V250</div><div class="botones-linea" style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
-        <button class="btn" style="background:#0088dd;" onclick="window.open('https://www.mediafire.com/file/9g0gorpde7pa7hm/FREE+FIRE+ANKIT+HUNTER+250+.apks/file')">📥 DESCARGAR</button>
-    </div></div>
-    <div class="mod-card"><div class="mod-name">🧪 SENSI‑X‑GOD V2</div><div class="botones-linea" style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
-        <button class="btn" style="background:#0088dd;" onclick="window.open('https://www.mediafire.com/file/js09hcx2x6971b9/SensiXGod_Key_(V2).apk/file')">📥 DESCARGAR</button>
-    </div></div>
+    <div class="mod-card">
+        <div class="mod-name">🔥 ANKIT HUNTER V250</div>
+        <div class="botones-linea">
+            <button class="btn btn-azul" onclick="window.open('https://www.mediafire.com/file/9g0gorpde7pa7hm/FREE+FIRE+ANKIT+HUNTER+250+.apks/file')">📥 DESCARGAR</button>
+        </div>
+    </div>
+    <div class="mod-card">
+        <div class="mod-name">🧪 SENSI‑X‑GOD V2</div>
+        <div class="botones-linea">
+            <button class="btn btn-azul" onclick="window.open('https://www.mediafire.com/file/js09hcx2x6971b9/SensiXGod_Key_(V2).apk/file')">📥 DESCARGAR</button>
+        </div>
+    </div>
 </div>
 
 <div class="section" id="sec1">
-    <div class="mod-card"><div class="mod-name">📦 BR MODS V2</div><div style="color:#aaa;font-size:0.75rem;">👤 @H0AZA • 🔑 @SX2TEAM</div><div class="botones-linea" style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
-        <button class="btn" style="background:#0088dd;" onclick="window.open('https://www.mediafire.com/file/pl38keodqzvbxsv/BrModsFreev2.apk/file')">📁 ARCHIVO</button>
-        <button class="btn" style="background:#cc8800;" onclick="alert('👤 USUARIO: @H0AZA\n🔑 CLAVE: @SX2TEAM')">👤 DATOS</button>
-    </div></div>
-    <div class="mod-card"><div class="mod-name">📦 BR MODS V3 PRO</div><div style="color:#aaa;font-size:0.75rem;">👤 @H0AZA • 🔑 @SX2TEAM</div><div class="botones-linea" style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
-        <button class="btn" style="background:#0088dd;" onclick="window.open('https://www.mediafire.com/file/ykkk0s75jqi3ek6/BrMods-V3ProFix.apk/file')">📁 ARCHIVO</button>
-        <button class="btn" style="background:#cc8800;" onclick="alert('👤 USUARIO: @H0AZA\n🔑 CLAVE: @SX2TEAM')">👤 DATOS</button>
-    </div></div>
-    <div class="mod-card"><div class="mod-name">📦 BR MODS V2 ROJO</div><div style="color:#aaa;font-size:0.75rem;">👤 Sx2brfree • 🔑 Sx2brfree</div><div class="botones-linea" style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
-        <button class="btn" style="background:#0088dd;" onclick="window.open('https://www.mediafire.com/file/pd2b7wk6xxr2vfn/brxmodsvRedV2.apk/file')">📁 ARCHIVO</button>
-        <button class="btn" style="background:#cc8800;" onclick="alert('👤 USUARIO: Sx2brfree\n🔑 CLAVE: Sx2brfree')">👤 DATOS</button>
-    </div></div>
-    <div class="mod-card"><div class="mod-name">🎮 FREE FIRE MAX</div><div class="botones-linea" style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
-        <button class="btn" style="background:#0088dd;" onclick="window.open('https://www.mediafire.com/file/zqn7zdl87q84znc/Free+Fire+MAX_2.124.1.apks/file')">📥 DESCARGAR</button>
-    </div></div>
+    <div class="mod-card">
+        <div class="mod-name">📦 BR MODS V2</div>
+        <div style="text-align:center; font-size:13px; color:#aaa;">👤 @H0AZA • 🔑 @SX2TEAM</div>
+        <div class="botones-linea">
+            <button class="btn btn-azul" onclick="window.open('https://www.mediafire.com/file/pl38keodqzvbxsv/BrModsFreev2.apk/file')">📁 ARCHIVO</button>
+            <button class="btn btn-naranja" onclick="alert('👤 USUARIO: @H0AZA\n🔑 CLAVE: @SX2TEAM')">👤 DATOS</button>
+        </div>
+    </div>
+    <div class="mod-card">
+        <div class="mod-name">📦 BR MODS V3 PRO</div>
+        <div style="text-align:center; font-size:13px; color:#aaa;">👤 @H0AZA • 🔑 @SX2TEAM</div>
+        <div class="botones-linea">
+            <button class="btn btn-azul" onclick="window.open('https://www.mediafire.com/file/ykkk0s75jqi3ek6/BrMods-V3ProFix.apk/file')">📁 ARCHIVO</button>
+            <button class="btn btn-naranja" onclick="alert('👤 USUARIO: @H0AZA\n🔑 CLAVE: @SX2TEAM')">👤 DATOS</button>
+        </div>
+    </div>
+    <div class="mod-card">
+        <div class="mod-name">📦 BR MODS V2 ROJO</div>
+        <div style="text-align:center; font-size:13px; color:#aaa;">👤 Sx2brfree • 🔑 Sx2brfree</div>
+        <div class="botones-linea">
+            <button class="btn btn-azul" onclick="window.open('https://www.mediafire.com/file/pd2b7wk6xxr2vfn/brxmodsvRedV2.apk/file')">📁 ARCHIVO</button>
+            <button class="btn btn-naranja" onclick="alert('👤 USUARIO: Sx2brfree\n🔑 CLAVE: Sx2brfree')">👤 DATOS</button>
+        </div>
+    </div>
+    <div class="mod-card">
+        <div class="mod-name">🎮 FREE FIRE MAX</div>
+        <div class="botones-linea">
+            <button class="btn btn-azul" onclick="window.open('https://www.mediafire.com/file/zqn7zdl87q84znc/Free+Fire+MAX_2.124.1.apks/file')">📥 DESCARGAR</button>
+        </div>
+    </div>
 </div>
 
 <div class="section" id="sec2">
-    <div class="mod-card"><div class="mod-name">📦 BR MODS V2</div><div style="color:#aaa;font-size:0.75rem;">👤 @H0AZA • 🔑 @SX2TEAM</div><div class="botones-linea" style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
-        <button class="btn" style="background:#0088dd;" onclick="window.open('https://www.mediafire.com/file/pl38keodqzvbxsv/BrModsFreev2.apk/file')">📁 ARCHIVO</button>
-        <button class="btn" style="background:#cc8800;" onclick="alert('👤 USUARIO: @H0AZA\n🔑 CLAVE: @SX2TEAM')">👤 DATOS</button>
-    </div></div>
-    <div class="mod-card"><div class="mod-name">📦 BR MODS V3 PRO</div><div style="color:#aaa;font-size:0.75rem;">👤 @H0AZA • 🔑 @SX2TEAM</div><div class="botones-linea" style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
-        <button class="btn" style="background:#0088dd;" onclick="window.open('https://www.mediafire.com/file/ykkk0s75jqi3ek6/BrMods-V3ProFix.apk/file')">📁 ARCHIVO</button>
-        <button class="btn" style="background:#cc8800;" onclick="alert('👤 USUARIO: @H0AZA\n🔑 CLAVE: @SX2TEAM')">👤 DATOS</button>
-    </div></div>
-    <div class="mod-card"><div class="mod-name">📦 BR MODS V2 ROJO</div><div style="color:#aaa;font-size:0.75rem;">👤 Sx2brfree • 🔑 Sx2brfree</div><div class="botones-linea" style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
-        <button class="btn" style="background:#0088dd;" onclick="window.open('https://www.mediafire.com/file/pd2b7wk6xxr2vfn/brxmodsvRedV2.apk/file')">📁 ARCHIVO</button>
-        <button class="btn" style="background:#cc8800;" onclick="alert('👤 USUARIO: Sx2brfree\n🔑 CLAVE: Sx2brfree')">👤 DATOS</button>
-    </div></div>
-    <div class="mod-card"><div class="mod-name">🎮 FREE FIRE MAX</div><div class="botones-linea" style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
-        <button class="btn" style="background:#0088dd;" onclick="window.open('https://www.mediafire.com/file/zqn7zdl87q84znc/Free+Fire+MAX_2.124.1.apks/file')">📥 DESCARGAR</button>
-    </div></div>
+    <div class="mod-card">
+        <div class="mod-name">📦 BR MODS V2</div>
+        <div style="text-align:center; font-size:13px; color:#aaa;">👤 @H0AZA • 🔑 @SX2TEAM</div>
+        <div class="botones-linea">
+            <button class="btn btn-azul" onclick="window.open('https://www.mediafire.com/file/pl38keodqzvbxsv/BrModsFreev2.apk/file')">📁 ARCHIVO</button>
+            <button class="btn btn-naranja" onclick="alert('👤 USUARIO: @H0AZA\n🔑 CLAVE: @SX2TEAM')">👤 DATOS</button>
+        </div>
+    </div>
+    <div class="mod-card">
+        <div class="mod-name">📦 BR MODS V3 PRO</div>
+        <div style="text-align:center; font-size:13px; color:#aaa;">👤 @H0AZA • 🔑 @SX2TEAM</div>
+        <div class="botones-linea">
+            <button class="btn btn-azul" onclick="window.open('https://www.mediafire.com/file/ykkk0s75jqi3ek6/BrMods-V3ProFix.apk/file')">📁 ARCHIVO</button>
+            <button class="btn btn-naranja" onclick="alert('👤 USUARIO: @H0AZA\n🔑 CLAVE: @SX2TEAM')">👤 DATOS</button>
+        </div>
+    </div>
+    <div class="mod-card">
+        <div class="mod-name">📦 BR MODS V2 ROJO</div>
+        <div style="text-align:center; font-size:13px; color:#aaa;">👤 Sx2brfree • 🔑 Sx2brfree</div>
+        <div class="botones-linea">
+            <button class="btn btn-azul" onclick="window.open('https://www.mediafire.com/file/pd2b7wk6xxr2vfn/brxmodsvRedV2.apk/file')">📁 ARCHIVO</button>
+            <button class="btn btn-naranja" onclick="alert('👤 USUARIO: Sx2brfree\n🔑 CLAVE: Sx2brfree')">👤 DATOS</button>
+        </div>
+    </div>
+    <div class="mod-card">
+        <div class="mod-name">🎮 FREE FIRE MAX</div>
+        <div class="botones-linea">
+            <button class="btn btn-azul" onclick="window.open('https://www.mediafire.com/file/zqn7zdl87q84znc/Free+Fire+MAX_2.124.1.apks/file')">📥 DESCARGAR</button>
+        </div>
+    </div>
 </div>
 
-<a href="https://whatsapp.com/channel/0029Vb6vN7xEquiQMAAQuK0M" class="whatsapp-btn" style="display:block;max-width:300px;margin:25px auto;padding:14px;text-align:center;border-radius:14px;background:#25d366;color:#fff;text-decoration:none;font-size:0.8rem;">📲 CANAL OFICIAL</a>
+<a href="https://whatsapp.com/channel/0029Vb6vN7xEquiQMAAQuK0M" class="enlace-whatsapp">📲 CANAL OFICIAL</a>
 
 <script>
-function cerrarBienvenida(){document.getElementById('welcomePopup').style.display='none';}
-setTimeout(()=>{const p=document.getElementById('welcomePopup');if(p)p.style.display='none';},6000);
-
-document.getElementById('cambiarTema').addEventListener('click',()=>document.body.classList.toggle('light-mode'));
-
+document.getElementById('infoBtn').addEventListener('click', ()=>{
+    const el = document.getElementById('infoText');
+    el.style.display = el.style.display === 'block' ? 'none' : 'block';
+});
+document.getElementById('cambiarTema').addEventListener('click', ()=>{
+    document.body.classList.toggle('light-mode');
+});
 function cambiarPestana(n){
-    document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',i===n));
-    document.querySelectorAll('.section').forEach((s,i)=>s.classList.toggle('active',i===n));
+    document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active', i===n));
+    document.querySelectorAll('.section').forEach((s,i)=>s.classList.toggle('active', i===n));
 }
-document.getElementById('infoBtn').addEventListener('click',()=>document.getElementById('infoText').style.display=document.getElementById('infoText').style.display==='none'?'block':'none');
-
-// ✨ PARTÍCULAS (optimizado)
-const cnv=document.getElementById('particles'),ctx=cnv.getContext('2d');
-let w=cnv.width=innerWidth,h=cnv.height=innerHeight,arr=[];
-class P{constructor(){this.reset()}reset(){this.x=Math.random()*w;this.y=Math.random()*h;this.s=Math.random()*4+1;this.vx=(Math.random()-.5)*3;this.vy=(Math.random()-.5)*3;this.c=['#0ff','#f0f','#ff0','#0f0'][Math.floor(Math.random()*4)]}update(){this.x+=this.vx;this.y+=this.vy;this.vx+=(Math.random()-.5)*.2;this.vy+=(Math.random()-.5)*.2;if(this.x<0||this.x>w||this.y<0||this.y>h)this.reset()}draw(){ctx.globalAlpha=.4+Math.random()*.6;ctx.fillStyle=this.c;ctx.beginPath();ctx.arc(this.x,this.y,this.s,0,Math.PI*2);ctx.fill()}}
-function ini(){arr=[];for(let i=0;i<120;i++)arr.push(new P())}
-function ani(){ctx.clearRect(0,0,w,h);arr.forEach(p=>{p.update();p.draw()});requestAnimationFrame(ani)}
-ini();ani();onresize=()=>{w=cnv.width=innerWidth;h=cnv.height=innerHeight;ini()};
-
-if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
 </body>
-    </html>
+</html>
