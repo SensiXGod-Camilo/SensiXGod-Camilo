@@ -3,357 +3,291 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENSIXGOD | OFICIAL</title>
+    <title>SENSIXGOD | OFICIAL • GRATIS</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#007722">
+    <meta name="theme-color" content="#000000">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="SensiXGod">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Creepster&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Press+Start+2P&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
 
         * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.35s ease; }
+
         body {
+            background: #0a0a0a;
+            color: #ffffff;
+            font-family: 'Inter', system-ui, sans-serif;
             min-height: 100vh;
-            background: linear-gradient(135deg, #000428 0%, #002b55 50%, #000428 100%);
-            color: #00eeff;
-            font-family: 'Press Start 2P', cursive;
-            text-align: center;
             overflow-x: hidden;
             position: relative;
         }
+        /* ✨ Modo claro / oscuro */
+        body.light-mode { background: #ffffff; color: #111; }
+        body.light-mode header,
+        body.light-mode .welcome-box,
+        body.light-mode .mod-card { background:#f5f5f5; border-color:#ddd; }
+        body.light-mode .tab.active { color:#0099cc; border-color:#0099cc; }
 
-        /* 🟢 TEMA VERDE — ROOT / VIRTUAL */
-        body.verde .btn-seccion:not(.principal),
-        body.verde .mod-card,
-        body.verde .caja-seccion,
-        body.verde .button,
-        body.verde .video-caja { border-color:#00cc66 !important; box-shadow:0 0 20px #00cc6640 !important; }
-        body.verde .btn-seccion.activo:not(.principal) { background:#009944; color:#fff; }
-        body.verde .mod-name, body.verde h3, body.verde h4 { color:#44ff99 !important; }
-        body.verde .stars, body.verde .nebula, body.verde .scanlines { filter:hue-rotate(70deg); }
+        /* Fondo animado */
+        .stars, .nebula, .scanlines {
+            position: fixed; inset:0; z-index:-2; pointer-events:none;
+        }
+        .stars {
+            background-image: radial-gradient(2px 2px at 20% 30%, #fff, transparent),
+                              radial-gradient(1px 1px at 60% 70%, #fff, transparent),
+                              radial-gradient(1.5px 1.5px at 50% 50%, #00ddff, transparent);
+            background-size:200% 200%; animation: moveStars 60s linear infinite;
+        }
+        .nebula { background: radial-gradient(circle at 30% 50%, rgba(0,221,255,.15), transparent 50%),
+                               radial-gradient(circle at 70% 20%, rgba(0,255,200,.1), transparent 60%); }
+        .scanlines { background: repeating-linear-gradient(to bottom, transparent 0 1px, rgba(0,221,255,.04) 2px 3px); background-size:100% 4px; }
+        canvas#particles { position:fixed; inset:0; z-index:-1; pointer-events:none; }
 
-        /* ⚪ TEMA CLÁSICO / CLARO */
-        body.light-mode { background:#ffffff; color:#002244; }
-        body.light-mode .stars, body.light-mode .nebula, body.light-mode .scanlines { opacity:.08; }
-        body.light-mode .mod-card, body.light-mode .caja-seccion { background:rgba(240,245,255,.9); border-color:#0066bb; }
-        body.light-mode .button { background:rgba(230,240,255,.9); border-color:#0066bb; color:#003366; }
+        /* Encabezado */
+        header {
+            background: linear-gradient(180deg,#1a1a1a,#0a0a0a);
+            padding:20px 15px; text-align:center; border-bottom:1px solid #333;
+            position:sticky; top:0; z-index:100;
+        }
+        .logo {
+            font-family:'Creepster', cursive; font-size:clamp(2.6rem,8vw,4rem);
+            background:linear-gradient(90deg,#00f0ff,#00aaff);
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:6px;
+        }
+        .subtitle { color:#00ddff; font-size:1.1rem; letter-spacing:2px; }
 
-        .bienvenida { display:flex; align-items:center; justify-content:center; position:fixed; inset:0; background:rgba(0,0,0,.9); z-index:99999; }
-        .bienvenida-box { background:#000428; border:4px solid #00eeff; border-radius:12px; padding:30px 25px; max-width:420px; width:92%; box-shadow:0 0 30px #00eeff60; color:#fff; }
-        .oculto { display:none !important; }
+        .anuncio-nuevo {
+            background:linear-gradient(90deg,#00bb77,#00ddff); color:#000;
+            padding:14px 20px; max-width:760px; margin:18px auto; border-radius:12px;
+            font-weight:bold; text-align:center; border:2px solid #fff;
+        }
 
-        .whatsapp-fijo { position:fixed; top:15px; left:50%; transform:translateX(-50%); z-index:999; background:#25d366; color:#fff; padding:10px 22px; border-radius:50px; text-decoration:none; font-size:.9rem; display:flex; align-items:center; gap:8px; box-shadow:0 0 18px #25d36680; border:2px solid #fff; }
-        .tema-btn { position:fixed; top:15px; right:18px; z-index:999; width:42px; height:42px; border-radius:50%; border:none; background:#ffcc00; color:#000; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center; border:2px solid #fff; }
+        /* Botones fijos */
+        .tema-btn {
+            position:fixed; top:15px; right:18px; z-index:200;
+            width:42px; height:42px; border-radius:50%; border:none;
+            background:#ffcc00; color:#000; font-size:20px; cursor:pointer; border:2px solid #fff;
+        }
         body.light-mode .tema-btn { background:#222; color:#ffcc00; }
 
-        .stars, .nebula, .scanlines { position:fixed; top:0; left:0; width:100%; height:100%; z-index:-3; }
-        .stars { background-image: radial-gradient(2px 2px at 20% 30%, #fff, transparent), radial-gradient(1px 1px at 60% 70%, #fff, transparent), radial-gradient(1.5px 1.5px at 50% 50%, #00eeff, transparent), radial-gradient(1px 1px at 80% 10%, #00ccff, transparent); background-size:200% 200%; animation:moveStars 60s linear infinite; }
-        canvas { position:fixed; inset:0; z-index:-1; pointer-events:none; }
+        .whatsapp-fijo {
+            position:fixed; top:15px; left:50%; transform:translateX(-50%); z-index:200;
+            background:#25d366; color:#fff; padding:9px 20px; border-radius:50px;
+            display:flex; align-items:center; gap:7px; font-size:.85rem;
+            text-decoration:none; border:2px solid #fff;
+        }
+        .whatsapp-fijo img { width:20px; height:20px; }
+        .whatsapp-btn {
+            position:fixed; bottom:20px; right:20px; background:#25d366; color:#fff;
+            padding:13px 20px; border-radius:50px; text-decoration:none; font-weight:bold;
+            box-shadow:0 4px 14px rgba(37,211,102,.4); z-index:1000;
+        }
 
-        h1 { font-family:'Creepster', cursive; font-size:clamp(4rem,12vw,8rem); margin:90px 0 40px; background:linear-gradient(90deg,#00eeff,#0088ff,#00eeff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; filter:drop-shadow(0 0 20px #00eeff); letter-spacing:6px; }
-        .submenu { display:flex; justify-content:center; gap:12px; margin-top:15px; flex-wrap:wrap; }
-        .btn-seccion { background:#444855; border:3px solid #666b7a; color:#b0b5c5; padding:12px 22px; border-radius:8px; font-family:inherit; cursor:pointer; }
-        .btn-seccion.activo { background:#0077dd; border-color:#33aaff; color:#fff; box-shadow:0 0 18px #0077dd60; }
+        /* Bienvenida */
+        .welcome-popup { position:fixed; inset:0; background:rgba(0,0,0,.95); display:flex; align-items:center; justify-content:center; z-index:9999; }
+        .welcome-box { background:#111; border:2px solid #00ddff; padding:30px 25px; border-radius:16px; max-width:380px; width:92%; text-align:center; }
+        .oculto { display:none !important; }
 
-        .contenido-seccion { display:none; max-width:880px; margin:0 auto 60px; padding:20px; }
-        .contenido-seccion.visible { display:block; animation:fadeScale .4s ease-out; }
-        .caja-seccion { background:rgba(0,15,50,.9); border:3px solid #00eeff; border-radius:12px; padding:25px; }
-        .mods-grid { display:flex; flex-direction:column; gap:22px; align-items:center; margin:20px 0; }
-        .mod-card { background:linear-gradient(145deg, rgba(0,30,80,.9), rgba(0,10,40,.9)); border:3px solid #00eeff; padding:22px; border-radius:10px; width:min(95%,460px); text-align:left; }
-        .mod-name { font-size:1.1rem; margin-bottom:12px; color:#00ffcc; text-align:center; }
-        .doble-boton, .triple-boton { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
-        .button { padding:10px 18px; font-size:.78rem; font-family:inherit; border:2px solid #00eeff; background:rgba(0,25,70,.85); color:#fff; border-radius:7px; cursor:pointer; }
-        .btn-key { background:#229955; border-color:#44ff99; }
-        .btn-apk { background:#0077bb; border-color:#00ccff; }
-        .btn-auto { background:#cc8800; border-color:#ffcc00; }
-        .video-caja { max-width:420px; margin:20px auto; border-radius:12px; overflow:hidden; border:3px solid #ffcc00; }
-        .video-caja iframe { width:100%; height:230px; border:none; }
+        /* Pestañas */
+        .tabs { display:flex; justify-content:center; gap:18px; margin:25px 0; border-bottom:1px solid #2b2b2b; flex-wrap:wrap; }
+        .tab { padding:11px 22px; font-size:1rem; cursor:pointer; border-bottom:3px solid transparent; opacity:.75; }
+        .tab.active { color:#00ddff; border-bottom-color:#00ddff; opacity:1; font-weight:600; }
 
-        .modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.85); align-items:center; justify-content:center; z-index:9999; }
-        .modal-box { background:#000428; border:3px solid #00eeff; padding:25px; border-radius:12px; max-width:400px; width:92%; color:#fff; }
-        .modal-auto { display:none; position:fixed; inset:0; background:rgba(0,0,0,.9); align-items:center; justify-content:center; z-index:99999; }
-        .modal-auto-box { background:#000428; border:4px solid #ffcc00; padding:30px; border-radius:12px; max-width:400px; width:92%; text-align:center; }
-        .contador-auto { font-size:2rem; color:#ffcc00; font-weight:bold; margin:15px 0; }
-        .visible { display:flex !important; }
+        /* Contenido */
+        .section { display:none; padding:15px; max-width:520px; margin:0 auto; }
+        .section.active { display:block; }
+        .mod-card {
+            background:#111; border:1px solid #2a2a2a; border-radius:12px;
+            padding:20px; margin:15px auto; transition:.3s;
+        }
+        .mod-card:hover { border-color:#00ddff; transform:translateY(-3px); box-shadow:0 0 20px rgba(0,221,255,.18); }
+        .mod-name { font-size:1.2rem; font-weight:600; text-align:center; margin-bottom:12px; color:#00eeff; }
+        .botones-linea { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+        .btn {
+            padding:9px 16px; border-radius:8px; border:none; font-family:inherit; font-size:.85rem; cursor:pointer; font-weight:600;
+        }
+        .btn-desc { background:#0088dd; color:#fff; }
+        .btn-key { background:#22aa66; color:#fff; }
+        .btn-datos { background:#cc8800; color:#fff; }
+
+        #infoBtn { display:block; margin:15px auto; padding:10px 22px; background:#222; border:2px solid #444; color:#fff; border-radius:8px; cursor:pointer; }
+        #infoText { max-width:550px; margin:0 auto; padding:15px; display:none; }
+        #infoText.visible { display:block; }
+        .caja-seccion { background:#141414; border:1px solid #333; border-radius:10px; padding:18px; }
 
         @keyframes moveStars { to { background-position:200% 200%; } }
-        @keyframes fadeScale { from {opacity:0; transform:scale(.92);} to {opacity:1; transform:scale(1);} }
     </style>
 </head>
 <body>
 
-<div class="bienvenida" id="cajaBienvenida">
-    <div class="bienvenida-box">
-        <h2>Bienvenido A la página de SensiXGod 🤩</h2>
-        <p>serás bienvenido siempre.</p>
-        <button class="button" id="btnConfirmar">✅ CONFIRMAR</button>
+<div class="welcome-popup" id="welcomePopup">
+    <div class="welcome-box">
+        <h2>¡Bienvenido a SensiXGod! 🤩</h2>
+        <p style="color:#aaa; margin:14px 0;">TODO GRATIS • MOD MENÚS • ROOT • VIRTUAL</p>
+        <button onclick="cerrarBienvenida()" style="background:#00ddff; color:#000; border:none; padding:12px 30px; border-radius:50px; font-weight:bold; cursor:pointer;">✅ ENTRAR</button>
     </div>
 </div>
 
 <a href="https://whatsapp.com/channel/0029Vb6vN7xEquiQMAAQuK0M" target="_blank" class="whatsapp-fijo">
-    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp"> GRUPO OFC DE PANELES
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WP"> CANAL OFICIAL
 </a>
-
 <button class="tema-btn" id="cambiarTema">☀️</button>
 
-<div class="stars"></div><div class="nebula"></div><div class="scanlines"></div><canvas id="particles"></canvas>
+<div class="stars"></div><div class="nebula"></div><div class="scanlines"></div>
+<canvas id="particles"></canvas>
 
-<h1>SENSIXGOD</h1>
-<p class="subtitulo">• MERCADO Y DESCARGAS OFICIALES •</p>
+<header>
+    <div class="logo">SENSIXGOD</div>
+    <div class="subtitle">✅ TODO TOTALMENTE GRATIS</div>
+</header>
 
-<button id="infoBtn" class="button">¿POR QUÉ SE CREÓ ESTA PÁGINA?</button>
-<div id="infoText" class="contenido-seccion">
+<div class="anuncio-nuevo">🔥 DESCARGAS Y CLAVES SIN COSTO — SOLO LO OFICIAL Y SEGURO</div>
+
+<button id="infoBtn">❓ ¿POR QUÉ ESTA PÁGINA?</button>
+<div id="infoText">
     <div class="caja-seccion">
-        <p>Esta página fue creada para detener el robo de contenido. Muchas personas copiaban y redistribuían nuestros paneles sin permiso.</p>
-        <p>Desde aquí verás solo lo oficial y seguro.</p>
-        <p style="color:#00ff99; font-size:1rem; margin:20px 0; font-weight:bold;">Aquí siempre la información es real ✅</p>
-        <button id="closeBtn" class="button">CERRAR</button>
+        <p>Para detener copias falsas y robo de contenido. Aquí solo material oficial y seguro — <strong>todo gratuito</strong>.</p>
+        <button onclick="this.parentElement.parentElement.classList.remove('visible')" style="margin-top:10px;">CERRAR</button>
     </div>
 </div>
 
-<div class="menu-principal" style="max-width:600px; margin:30px auto;">
-    <button class="btn-principal button" style="padding:12px 30px; font-size:1.2rem; border-radius:10px;">= MOD MENÚS =</button>
-    <div class="submenu">
-        <button class="btn-seccion activo" data-seccion="modmenu">📂 TODOS</button>
-        <button class="btn-seccion" data-seccion="root">🔑 ROOT</button>
-        <button class="btn-seccion" data-seccion="virtual">📱 VIRTUAL</button>
-    </div>
+<div class="tabs">
+    <div class="tab active" onclick="cambiarPestana(0)">📂 MOD MENÚS</div>
+    <div class="tab" onclick="cambiarPestana(1)">🔑 ROOT</div>
+    <div class="tab" onclick="cambiarPestana(2)">📱 VIRTUAL</div>
 </div>
 
-<!-- 📂 TODOS / MOD MENÚS -->
-<div id="modmenu" class="contenido-seccion visible">
-    <div class="caja-seccion">
-        <h3 style="color:#00ffcc;">📂 MOD MENÚS DISPONIBLES</h3>
-        <div class="mods-grid">
-            <div class="mod-card">
-                <div class="mod-name">🇨🇺 Cuban Mods — v9.2</div>
-                <div class="doble-boton">
-                    <button class="button btn-key" data-link="https://cubanmods.com/keygratis.php">🔑 CLAVE</button>
-                    <button class="button btn-apk" data-link="https://www.mediafire.com/file/ok6rsfq0r8y5ffc/Cuban-Mods-9.2.apks/file">📥 APK</button>
-                </div>
-            </div>
-            <div class="mod-card">
-                <div class="mod-name">👑 The King Cheats — V258</div>
-                <div class="mod-desc">⚠️ Activa al inicio y desactiva al final ✅ Sin lista negra</div>
-                <div class="doble-boton">
-                    <button class="button btn-apk" data-link="https://www.mediafire.com/file/pt08dk9drp1qy0v/TheKingCheats_V258.apks/file">📥 DESCARGAR</button>
-                </div>
-            </div>
-            <div class="mod-card">
-                <div class="mod-name">🔥 Ankit Hunter — V250</div>
-                <div class="doble-boton">
-                    <button class="button btn-apk" data-link="https://www.mediafire.com/file/9g0gorpde7pa7hm/FREE+FIRE+ANKIT+HUNTER+250+.apks/file">📥 DESCARGAR</button>
-                </div>
-            </div>
-            <div class="mod-card">
-                <div class="mod-name">🧪 Generador — SensiXGod V2</div>
-                <div class="doble-boton">
-                    <button class="button btn-apk" data-link="https://www.mediafire.com/file/js09hcx2x6971b9/SensiXGod_Key_(V2).apk/file">📥 DESCARGAR</button>
-                </div>
-            </div>
+<!-- 📂 MOD MENÚS — GRATIS -->
+<div class="section active" id="sec0">
+    <div class="mod-card">
+        <div class="mod-name">🇨🇺 Cuban Mods v9.2</div>
+        <div class="botones-linea">
+            <button class="btn btn-key" onclick="window.open('https://cubanmods.com/keygratis.php','_blank')">🔑 CLAVE</button>
+            <button class="btn btn-desc" onclick="window.open('https://www.mediafire.com/file/ok6rsfq0r8y5ffc/Cuban-Mods-9.2.apks/file','_blank')">📥 DESCARGAR</button>
         </div>
-        <h4>🔐 Tutorial — Ankit Hunter</h4>
-        <div class="video-caja"><iframe src="https://youtube.com/embed/Hc9JUBjRG4Q" allowfullscreen></iframe></div>
-        <h4>🔑 Tutorial — The King Cheats</h4>
-        <div class="video-caja"><iframe src="https://youtube.com/embed/lLMCwcj7s6g" allowfullscreen></iframe></div>
     </div>
-</div>
-
-<!-- 🔑 ROOT 🟢 -->
-<div id="root" class="contenido-seccion">
-    <div class="caja-seccion">
-        <h3 style="color:#ff7777;">🔑 ROOT MOD MENÚS</h3>
-        <div class="mods-grid">
-            <div class="mod-card">
-                <div class="mod-name">📦 BR MODS V2</div>
-                <div class="mod-desc">👤 @H0AZA • 🔐 @SX2TEAM</div>
-                <div class="triple-boton">
-                    <button class="button btn-auto" data-link="https://www.mediafire.com/file/pl38keodqzvbxsv/BrModsFreev2.apk/file">📁 ARCHIVO</button>
-                    <button class="button btn-auto" data-tipo="user">👤 USUARIO</button>
-                    <button class="button btn-auto" data-tipo="key">🔑 LLAVE</button>
-                </div>
-            </div>
-            <div class="mod-card">
-                <div class="mod-name">📦 BR MODS V3 PRO</div>
-                <div class="mod-desc">👤 @H0AZA • 🔐 @SX2TEAM</div>
-                <div class="triple-boton">
-                    <button class="button btn-auto" data-link="https://www.mediafire.com/file/ykkk0s75jqi3ek6/BrMods-V3ProFix.apk/file">📁 ARCHIVO</button>
-                    <button class="button btn-auto" data-tipo="user">👤 USUARIO</button>
-                    <button class="button btn-auto" data-tipo="key">🔑 LLAVE</button>
-                </div>
-            </div>
-            <div class="mod-card">
-                <div class="mod-name">📦 BR MODS V2 ROJO</div>
-                <div class="mod-desc">👤 Sx2brfree • 🔐 Sx2brfree</div>
-                <div class="triple-boton">
-                    <button class="button btn-auto" data-link="https://www.mediafire.com/file/pd2b7wk6xxr2vfn/brxmodsvRedV2.apk/file">📁 ARCHIVO</button>
-                    <button class="button btn-auto" data-tipo="user2">👤 USUARIO</button>
-                    <button class="button btn-auto" data-tipo="key2">🔑 LLAVE</button>
-                </div>
-            </div>
-            <div class="mod-card">
-                <div class="mod-name">🎮 FREE FIRE MAX</div>
-                <div class="doble-boton">
-                    <button class="button btn-auto" data-link="https://www.mediafire.com/file/zqn7zdl87q84znc/Free+Fire+MAX_2.124.1.apks/file">📥 DESCARGAR</button>
-                </div>
-            </div>
+    <div class="mod-card">
+        <div class="mod-name">👑 The King Cheats V258</div>
+        <div class="botones-linea">
+            <button class="btn btn-desc" onclick="window.open('https://www.mediafire.com/file/pt08dk9drp1qy0v/TheKingCheats_V258.apks/file','_blank')">📥 DESCARGAR</button>
+        </div>
+    </div>
+    <div class="mod-card">
+        <div class="mod-name">🔥 Ankit Hunter V250</div>
+        <div class="botones-linea">
+            <button class="btn btn-desc" onclick="window.open('https://www.mediafire.com/file/9g0gorpde7pa7hm/FREE+FIRE+ANKIT+HUNTER+250+.apks/file','_blank')">📥 DESCARGAR</button>
+        </div>
+    </div>
+    <div class="mod-card">
+        <div class="mod-name">🧪 Generador SensiXGod V2</div>
+        <div class="botones-linea">
+            <button class="btn btn-desc" onclick="window.open('https://www.mediafire.com/file/js09hcx2x6971b9/SensiXGod_Key_(V2).apk/file','_blank')">📥 DESCARGAR</button>
         </div>
     </div>
 </div>
 
-<!-- 📱 VIRTUAL 🟢 -->
-<div id="virtual" class="contenido-seccion">
-    <div class="caja-seccion">
-        <h3 style="color:#77ffaa;">📱 VIRTUAL MOD MENÚS</h3>
-        <div class="mods-grid">
-            <div class="mod-card">
-                <div class="mod-name">📦 BR MODS V2</div>
-                <div class="mod-desc">👤 @H0AZA • 🔐 @SX2TEAM</div>
-                <div class="triple-boton">
-                    <button class="button btn-auto" data-link="https://www.mediafire.com/file/pl38keodqzvbxsv/BrModsFreev2.apk/file">📁 ARCHIVO</button>
-                    <button class="button btn-auto" data-tipo="user">👤 USUARIO</button>
-                    <button class="button btn-auto" data-tipo="key">🔑 LLAVE</button>
-                </div>
-            </div>
-            <div class="mod-card">
-                <div class="mod-name">📦 BR MODS V3 PRO</div>
-                <div class="mod-desc">👤 @H0AZA • 🔐 @SX2TEAM</div>
-                <div class="triple-boton">
-                    <button class="button btn-auto" data-link="https://www.mediafire.com/file/ykkk0s75jqi3ek6/BrMods-V3ProFix.apk/file">📁 ARCHIVO</button>
-                    <button class="button btn-auto" data-tipo="user">👤 USUARIO</button>
-                    <button class="button btn-auto" data-tipo="key">🔑 LLAVE</button>
-                </div>
-            </div>
-            <div class="mod-card">
-                <div class="mod-name">📦 BR MODS V2 ROJO</div>
-                <div class="mod-desc">👤 Sx2brfree • 🔐 Sx2brfree</div>
-                <div class="triple-boton">
-                    <button class="button btn-auto" data-link="https://www.mediafire.com/file/pd2b7wk6xxr2vfn/brxmodsvRedV2.apk/file">📁 ARCHIVO</button>
-                    <button class="button btn-auto" data-tipo="user2">👤 USUARIO</button>
-                    <button class="button btn-auto" data-tipo="key2">🔑 LLAVE</button>
-                </div>
-            </div>
-            <div class="mod-card">
-                <div class="mod-name">🎮 FREE FIRE MAX</div>
-                <div class="doble-boton">
-                    <button class="button btn-auto" data-link="https://www.mediafire.com/file/zqn7zdl87q84znc/Free+Fire+MAX_2.124.1.apks/file">📥 DESCARGAR</button>
-                </div>
-            </div>
+<!-- 🔑 ROOT -->
+<div class="section" id="sec1">
+    <div class="mod-card">
+        <div class="mod-name">📦 BR MODS V2</div>
+        <div style="font-size:.9rem; color:#aaa; margin-bottom:8px;">👤 @H0AZA • 🔐 @SX2TEAM</div>
+        <div class="botones-linea">
+            <button class="btn btn-desc" onclick="window.open('https://www.mediafire.com/file/pl38keodqzvbxsv/BrModsFreev2.apk/file','_blank')">📁 ARCHIVO</button>
+            <button class="btn btn-datos" onclick="alert('👤 Usuario: @H0AZA\n🔑 Clave: @SX2TEAM\n✅ Copiado')">👤 DATOS</button>
+        </div>
+    </div>
+    <div class="mod-card">
+        <div class="mod-name">📦 BR MODS V3 PRO</div>
+        <div style="font-size:.9rem; color:#aaa; margin-bottom:8px;">👤 @H0AZA • 🔐 @SX2TEAM</div>
+        <div class="botones-linea">
+            <button class="btn btn-desc" onclick="window.open('https://www.mediafire.com/file/ykkk0s75jqi3ek6/BrMods-V3ProFix.apk/file','_blank')">📁 ARCHIVO</button>
+            <button class="btn btn-datos" onclick="alert('👤 Usuario: @H0AZA\n🔑 Clave: @SX2TEAM\n✅ Copiado')">👤 DATOS</button>
+        </div>
+    </div>
+    <div class="mod-card">
+        <div class="mod-name">📦 BR MODS V2 ROJO</div>
+        <div style="font-size:.9rem; color:#aaa; margin-bottom:8px;">👤 Sx2brfree • 🔐 Sx2brfree</div>
+        <div class="botones-linea">
+            <button class="btn btn-desc" onclick="window.open('https://www.mediafire.com/file/pd2b7wk6xxr2vfn/brxmodsvRedV2.apk/file','_blank')">📁 ARCHIVO</button>
+            <button class="btn btn-datos" onclick="alert('👤 Usuario: Sx2brfree\n🔑 Clave: Sx2brfree\n✅ Copiado')">👤 DATOS</button>
+        </div>
+    </div>
+    <div class="mod-card">
+        <div class="mod-name">🎮 FREE FIRE MAX</div>
+        <div class="botones-linea">
+            <button class="btn btn-desc" onclick="window.open('https://www.mediafire.com/file/zqn7zdl87q84znc/Free+Fire+MAX_2.124.1.apks/file','_blank')">📥 DESCARGAR</button>
         </div>
     </div>
 </div>
 
-<!-- MODALES -->
-<div id="ventanaAccion" class="modal">
-    <div class="modal-box">
-        <h3 id="textoPregunta">¿Seguro continuar?</h3>
-        <div id="contadorTexto">5 seg...</div>
-        <div style="display:flex; gap:10px; justify-content:center; margin-top:10px;">
-            <button class="button" id="aceptarAccion">✅ ACEPTAR</button>
-            <button class="button" id="cancelarAccion">❌ CANCELAR</button>
+<!-- 📱 VIRTUAL -->
+<div class="section" id="sec2">
+    <div class="mod-card">
+        <div class="mod-name">📦 BR MODS V2</div>
+        <div style="font-size:.9rem; color:#aaa; margin-bottom:8px;">👤 @H0AZA • 🔐 @SX2TEAM</div>
+        <div class="botones-linea">
+            <button class="btn btn-desc" onclick="window.open('https://www.mediafire.com/file/pl38keodqzvbxsv/BrModsFreev2.apk/file','_blank')">📁 ARCHIVO</button>
+            <button class="btn btn-datos" onclick="alert('👤 Usuario: @H0AZA\n🔑 Clave: @SX2TEAM\n✅ Copiado')">👤 DATOS</button>
+        </div>
+    </div>
+    <div class="mod-card">
+        <div class="mod-name">📦 BR MODS V3 PRO</div>
+        <div style="font-size:.9rem; color:#aaa; margin-bottom:8px;">👤 @H0AZA • 🔐 @SX2TEAM</div>
+        <div class="botones-linea">
+            <button class="btn btn-desc" onclick="window.open('https://www.mediafire.com/file/ykkk0s75jqi3ek6/BrMods-V3ProFix.apk/file','_blank')">📁 ARCHIVO</button>
+            <button class="btn btn-datos" onclick="alert('👤 Usuario: @H0AZA\n🔑 Clave: @SX2TEAM\n✅ Copiado')">👤 DATOS</button>
+        </div>
+    </div>
+    <div class="mod-card">
+        <div class="mod-name">📦 BR MODS V2 ROJO</div>
+        <div style="font-size:.9rem; color:#aaa; margin-bottom:8px;">👤 Sx2brfree • 🔐 Sx2brfree</div>
+        <div class="botones-linea">
+            <button class="btn btn-desc" onclick="window.open('https://www.mediafire.com/file/pd2b7wk6xxr2vfn/brxmodsvRedV2.apk/file','_blank')">📁 ARCHIVO</button>
+            <button class="btn btn-datos" onclick="alert('👤 Usuario: Sx2brfree\n🔑 Clave: Sx2brfree\n✅ Copiado')">👤 DATOS</button>
+        </div>
+    </div>
+    <div class="mod-card">
+        <div class="mod-name">🎮 FREE FIRE MAX</div>
+        <div class="botones-linea">
+            <button class="btn btn-desc" onclick="window.open('https://www.mediafire.com/file/zqn7zdl87q84znc/Free+Fire+MAX_2.124.1.apks/file','_blank')">📥 DESCARGAR</button>
         </div>
     </div>
 </div>
-<div id="modalAuto" class="modal-auto">
-    <div class="modal-auto-box">
-        <h3 id="textoAuto">Procesando...</h3>
-        <div class="contador-auto" id="contadorAuto">5</div>
-    </div>
-</div>
+
+<a href="https://whatsapp.com/channel/0029Vb6vN7xEquiQMAAQuK0M" target="_blank" class="whatsapp-btn">📲 CANAL</a>
 
 <script>
-// 🎚️ BOTÓN DE BIENVENIDA
-document.getElementById("btnConfirmar").addEventListener("click", ()=>document.getElementById("cajaBienvenida").classList.add("oculto"));
+function cerrarBienvenida(){ document.getElementById('welcomePopup').style.display='none'; }
+setTimeout(()=>{ const p=document.getElementById('welcomePopup'); if(p)p.style.display='none'; },8000);
 
-// ✨ CAMBIO DE TEMA ☀️ / 🌙 — YA FUNCIONA
-const btnTema = document.getElementById("cambiarTema");
-btnTema.addEventListener("click", ()=>{
-    document.body.classList.toggle("light-mode");
-    btnTema.textContent = document.body.classList.contains("light-mode") ? "🌙" : "☀️";
+const btnTema=document.getElementById('cambiarTema');
+btnTema.addEventListener('click',()=>{
+    document.body.classList.toggle('light-mode');
+    btnTema.textContent=document.body.classList.contains('light-mode')?'🌙':'☀️';
 });
 
-// 📂 NAVEGACIÓN + 🟢 CAMBIO A VERDE
-const btnsSub = document.querySelectorAll(".btn-seccion");
-const secciones = document.querySelectorAll(".contenido-seccion");
-btnsSub.forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-        btnsSub.forEach(b=>b.classList.remove("activo"));
-        secciones.forEach(s=>s.classList.remove("visible"));
-        btn.classList.add("activo");
-        const id = btn.dataset.seccion;
-        document.getElementById(id).classList.add("visible");
-        if(id==="root"||id==="virtual") document.body.classList.add("verde");
-        else document.body.classList.remove("verde");
-    });
-});
-
-// 📄 MODAL DESCARGA: ACEPTAR YA FUNCIONA
-let destinoFinal = ""; let cuenta;
-document.querySelectorAll(".btn-key,.btn-apk").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-        destinoFinal = btn.dataset.link;
-        const m = document.getElementById("ventanaAccion");
-        const c = document.getElementById("contadorTexto");
-        m.classList.add("visible");
-        let seg=5; c.textContent = seg + " seg...";
-        clearInterval(cuenta);
-        cuenta = setInterval(()=>{
-            seg--; c.textContent = seg + " seg...";
-            if(seg<=0){ clearInterval(cuenta); irA(); }
-        },1000);
-    });
-});
-const irA = ()=>{ if(destinoFinal) window.open(destinoFinal,"_blank"); document.getElementById("ventanaAccion").classList.remove("visible"); };
-document.getElementById("aceptarAccion").addEventListener("click", ()=>{ clearInterval(cuenta); irA(); });
-document.getElementById("cancelarAccion").addEventListener("click", ()=>{ clearInterval(cuenta); document.getElementById("ventanaAccion").classList.remove("visible"); });
-
-// 🔑 BOTONES USUARIO / LLAVE → MUESTRA Y COPIA
-document.querySelectorAll(".btn-auto").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-        const tipo = btn.dataset.tipo;
-        let txt = "";
-        if(tipo==="user") txt = "👤 Usuario: @H0AZA";
-        else if(tipo==="key") txt = "🔑 Contraseña: @SX2TEAM";
-        else if(tipo==="user2") txt = "👤 Usuario: Sx2brfree";
-        else if(tipo==="key2") txt = "🔑 Contraseña: Sx2brfree";
-        else {
-            // 📥 DESCARGA
-            const link = btn.dataset.link;
-            const m = document.getElementById("modalAuto");
-            const ca = document.getElementById("contadorAuto");
-            let seg=5; ca.textContent=seg; m.classList.add("visible");
-            const t = setInterval(()=>{ seg--; ca.textContent=seg;
-                if(seg<=0){ clearInterval(t); m.classList.remove("visible"); if(link) window.open(link,"_blank"); }
-            },1000);
-            return;
-        }
-        alert(txt + "\n✅ Copiado al portapapeles");
-        navigator.clipboard?.writeText(txt.replace(/👤|🔑 /g,""));
-    });
-});
-
-// ✨ PARTÍCULAS
-const canvas=document.getElementById("particles"), ctx=canvas.getContext("2d");
-let w=canvas.width=window.innerWidth, h=canvas.height=window.innerHeight, p=[];
-class P{constructor(){this.reset()}reset(){this.x=Math.random()*w;this.y=Math.random()*h;this.s=Math.random()*2.5+.5;this.vx=(Math.random()-.5)*.4;this.vy=(Math.random()-.5)*.4;this.c="#00eeff"}update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>w||this.y<0||this.y>h)this.reset()}draw(){ctx.globalAlpha=.4+Math.random()*.4;ctx.fillStyle=this.c;ctx.beginPath();ctx.arc(this.x,this.y,this.s,0,Math.PI*2);ctx.fill()}}
-function init(){p=[];for(let i=0;i<120;i++)p.push(new P())}
-function anim(){ctx.clearRect(0,0,w,h);p.forEach(x=>{x.update();x.draw()});requestAnimationFrame(anim)}
-init();anim();window.onresize=()=>{w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;init()};
-
-// 📌 PWA: REGISTRO COMPLETO DEL SERVICE WORKER
-if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-        navigator.serviceWorker.register("sw.js")
-            .then(()=>console.log("✅ SW registrado"))
-            .catch(e=>console.log("⚠️ SW:",e));
-    });
+function cambiarPestana(n){
+    document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',i===n));
+    document.querySelectorAll('.section').forEach((s,i)=>s.classList.toggle('active',i===n));
 }
 
-// ℹ️ INFO
-document.getElementById("infoBtn").addEventListener("click",()=>document.getElementById("infoText").classList.toggle("visible"));
-document.getElementById("closeBtn").addEventListener("click",()=>document.getElementById("infoText").classList.remove("visible"));
+document.getElementById('infoBtn').addEventListener('click',()=>document.getElementById('infoText').classList.toggle('visible'));
+
+// Partículas
+const canvas=document.getElementById('particles'), ctx=canvas.getContext('2d');
+let w=canvas.width=window.innerWidth, h=canvas.height=window.innerHeight, part=[];
+class P{constructor(){this.reset()}reset(){this.x=Math.random()*w;this.y=Math.random()*h;this.s=Math.random()*2.5+.5;this.vx=(Math.random()-.5)*.4;this.vy=(Math.random()-.5)*.4;this.c="#00ddff"}update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>w||this.y<0||this.y>h)this.reset()}draw(){ctx.globalAlpha=.35+Math.random()*.4;ctx.fillStyle=this.c;ctx.beginPath();ctx.arc(this.x,this.y,this.s,0,Math.PI*2);ctx.fill()}}
+function ini(){part=[];for(let i=0;i<110;i++)part.push(new P())}
+function ani(){ctx.clearRect(0,0,w,h);part.forEach(p=>{p.update();p.draw()});requestAnimationFrame(ani)}
+ini();ani();window.onresize=()=>{w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;ini()};
+
+// PWA
+if("serviceWorker" in navigator){
+    window.addEventListener("load",()=>{ navigator.serviceWorker.register("sw.js").catch(e=>{}); });
+}
 </script>
 </body>
 </html>
