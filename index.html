@@ -28,6 +28,29 @@
             position:relative;
         }
 
+        /* 🎨 LIGHT MODE */
+        body.light-mode {
+            background:#f0f0f0;
+            color:#111;
+        }
+        body.light-mode .fondo-animado,
+        body.light-mode .stars,
+        body.light-mode .nebula,
+        body.light-mode .scanlines,
+        body.light-mode .ondas { opacity: 0.25; }
+        body.light-mode .mod-card,
+        body.light-mode header,
+        body.light-mode .welcome-box {
+            background:rgba(255,255,255,0.9);
+            color:#111;
+            border-color:#000;
+        }
+        body.light-mode .logo {
+            background:linear-gradient(90deg,#0066ff,#ff00aa,#ffaa00);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+
         /* 🎨 FONDO SUPER EFECTO */
         .fondo-animado {
             position:fixed; inset:-50%;
@@ -37,7 +60,7 @@
             filter:blur(60px) brightness(0.6);
             z-index:-4;
         }
-        .stars, .nebula, .scanlines, .ondas, .particulas-fondo {
+        .stars, .nebula, .scanlines, .ondas {
             position:fixed; inset:0; z-index:-3; pointer-events:none;
         }
         .stars {
@@ -65,7 +88,10 @@
             background:radial-gradient(circle,rgba(0,255,200,0.18) 0,transparent 70%);
             animation:expandirOndas 2s ease-out infinite;
         }
-        canvas#particles { position:fixed; inset:0; z-index:-2; pointer-events:none; filter:hue-rotate(0deg); animation:girarMatiz 4s linear infinite; }
+        canvas#particles { 
+            position:fixed; inset:0; z-index:-2; pointer-events:none; 
+            filter:hue-rotate(0deg); animation:girarMatiz 4s linear infinite; 
+        }
 
         /* 💡 EFECTOS GENERALES */
         @keyframes gradMov {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
@@ -116,7 +142,7 @@
             animation:rotarSuave 1.1s infinite alternate, bordeNeon 1.6s infinite;
             transition:all 0.2s; font-size:0.8rem;
         }
-        .mod-card:hover { transform:scale(1.07) rotate(0deg); box-shadow:0 0 30px #0ff,0 0 50px #f0f; }
+        .mod-card:hover, .mod-card:active { transform:scale(1.07) rotate(0deg); box-shadow:0 0 30px #0ff,0 0 50px #f0f; }
         .mod-name { font-size:1rem; font-weight:bold; text-align:center; animation:brilloTexto 0.8s infinite; margin-bottom:8px; }
         .novedad { color:#0f0; font-size:0.75rem; text-align:center; margin:6px 0; font-weight:bold; }
         .prohibido { color:#ff3333; font-size:0.75rem; text-align:center; margin:6px 0; font-weight:bold; text-decoration:line-through; }
@@ -124,7 +150,7 @@
             padding:10px 16px; border-radius:10px; border:none; font-weight:bold; cursor:pointer; position:relative; overflow:hidden; font-size:0.75rem;
             animation:rebote 1.3s infinite alternate, bordeNeon 1.4s infinite;
         }
-        .btn:hover { transform:scale(1.1); letter-spacing:1px; filter:brightness(1.4) saturate(180%); }
+        .btn:hover, .btn:active { transform:scale(1.1); letter-spacing:1px; filter:brightness(1.4) saturate(180%); }
         .btn:disabled, .btn-prohibido { background:#444 !important; color:#888 !important; cursor:not-allowed; opacity:0.6; }
         .video-incrustado { max-width:100%; border-radius:10px; margin:12px auto; border:2px solid #00eeff; box-shadow:0 0 15px #00eeff40; overflow:hidden; }
         .video-incrustado iframe { width:100%; height:200px; border:none; }
@@ -169,10 +195,13 @@
 </div>
 
 <div class="section active" id="sec0">
-    <div class="mod-card"><div class="mod-name">🇨🇺 CUBAN MODS v9.2</div><div class="botones-linea" style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
-        <button class="btn" style="background:#22aa66;" onclick="window.open('https://cubanmods.com/keygratis.php')">🔑 CLAVE</button>
-        <button class="btn" style="background:#0088dd;" onclick="window.open('https://www.mediafire.com/file/ok6rsfq0r8y5ffc/Cuban-Mods-9.2.apks/file')">📥 DESCARGAR</button>
-    </div></div>
+    <div class="mod-card">
+        <div class="mod-name">🇨🇺 CUBAN MODS v9.0</div>
+        <div class="botones-linea" style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
+            <button class="btn" style="background:#22aa66;" onclick="window.open('https://cubanmods.com/keygratis.php')">🔑 CLAVE</button>
+            <button class="btn" style="background:#0088dd;" onclick="window.open('https://www.mediafire.com/file/epkw3xo1vtl575c/Cuban-Mods-9.0.apks/file')">📥 DESCARGAR</button>
+        </div>
+    </div>
 
     <!-- ✅ THE KING CHEATS V259 + TUTORIAL DENTRO Y FUERA -->
     <div class="mod-card">
@@ -254,15 +283,15 @@ function cambiarPestana(n){
 }
 document.getElementById('infoBtn').addEventListener('click',()=>document.getElementById('infoText').style.display=document.getElementById('infoText').style.display==='none'?'block':'none');
 
-// ✨ PARTÍCULAS ACTIVAS
+// ✨ PARTÍCULAS (optimizado)
 const cnv=document.getElementById('particles'),ctx=cnv.getContext('2d');
 let w=cnv.width=innerWidth,h=cnv.height=innerHeight,arr=[];
 class P{constructor(){this.reset()}reset(){this.x=Math.random()*w;this.y=Math.random()*h;this.s=Math.random()*4+1;this.vx=(Math.random()-.5)*3;this.vy=(Math.random()-.5)*3;this.c=['#0ff','#f0f','#ff0','#0f0'][Math.floor(Math.random()*4)]}update(){this.x+=this.vx;this.y+=this.vy;this.vx+=(Math.random()-.5)*.2;this.vy+=(Math.random()-.5)*.2;if(this.x<0||this.x>w||this.y<0||this.y>h)this.reset()}draw(){ctx.globalAlpha=.4+Math.random()*.6;ctx.fillStyle=this.c;ctx.beginPath();ctx.arc(this.x,this.y,this.s,0,Math.PI*2);ctx.fill()}}
-function ini(){arr=[];for(let i=0;i<220;i++)arr.push(new P())}
+function ini(){arr=[];for(let i=0;i<120;i++)arr.push(new P())}
 function ani(){ctx.clearRect(0,0,w,h);arr.forEach(p=>{p.update();p.draw()});requestAnimationFrame(ani)}
 ini();ani();onresize=()=>{w=cnv.width=innerWidth;h=cnv.height=innerHeight;ini()};
 
 if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
 </body>
-</html>
+    </html>
